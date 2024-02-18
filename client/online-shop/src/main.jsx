@@ -6,9 +6,11 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Cart from './pages/Cart.jsx';
 import MainPage from './pages/MainPage.jsx';
-import Example from './pages/two_column_with_quantity_dropdown.jsx';
+import Cart from './pages/Cart.jsx';
+import ProductPage from './pages/ProductPage.jsx';
+import Shop from './pages/Shop.jsx';
+import Checkout from './pages/Checkout.jsx';
 
 
 const router = createBrowserRouter([
@@ -18,8 +20,20 @@ const router = createBrowserRouter([
   },
   {
     path:"/cart",
-    element:<Example/>
-  }
+    element:<Cart/>
+  },
+  {
+    path:"/product/:productId",
+    element:<ProductPage/>
+  },
+  {
+    path:"/shop",
+    element:<Shop/>
+  },
+  {
+    path:"/checkout",
+    element:<Checkout/>
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
