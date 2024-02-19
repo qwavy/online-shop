@@ -2,27 +2,23 @@ import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { addToCart, getAllProducts } from "../api/products/productsApi";
-
+import { addToCart, getAllProducts } from "../api/Api";
+import { sortByCategory } from "../api/Api";
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  const [sortByCategoryButton, setSortByCategoryButton] = useState(null);
 
-  const sortByCategory = (value) => {
-    fetch(`https://fakestoreapi.com/products/category/${value}`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+  const sortByCategoryButtonActive = (value) => {
+    setSortByCategoryButton(value);
   };
 
   return (
     <>
       <Header />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="flex justify-end">
+        <div className="flex ">
           <form class="max-w-sm mx-auto">
-            <label
-              for="countries"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Select
             </label>
             <select
@@ -36,25 +32,74 @@ const Shop = () => {
               <option value="women's clothing">women's clothing</option>
             </select>
           </form>
+          <form class="max-w-sm mx-auto">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Select
+            </label>
+            <select
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-36 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(e) => sortByPrice(e.target.value)}
+            >
+              <option selected>Select Category</option>
+              <option value="electronics">electronics</option>
+              <option value="jewelery">jewelery</option>
+              <option value="men's clothing">men's clothing</option>
+              <option value="women's clothing">women's clothing</option>
+            </select>
+          </form>
+          <button
+            className={
+              sortByCategoryButton === "electronicsActive"
+                ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
+                : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
+            }
+            onClick={() => {
+              sortByCategory("electronics",setProducts);
+              sortByCategoryButtonActive("electronicsActive");
+            }}
+          >
+            electronics
+          </button>
+          <button
+            className={
+              sortByCategoryButton === "jeweleryActive"
+                ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
+                : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
+            }
+            onClick={() => {
+              sortByCategory("jewelery",setProducts);
+              sortByCategoryButtonActive("jeweleryActive");
+            }}
+          >
+            jewelery
+          </button>
+          <button
+            className={
+              sortByCategoryButton === "men's clothingActive"
+                ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
+                : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
+            }
+            onClick={() => {
+              sortByCategory("men's clothing",setProducts);
+              sortByCategoryButtonActive("men's clothingActive");
+            }}
+          >
+            men's clothing
+          </button>
+          <button
+            className={
+              sortByCategoryButton === "women's clothingActive"
+                ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
+                : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
+            }
+            onClick={() => {
+              sortByCategory("women's clothing",setProducts);
+              sortByCategoryButtonActive("women's clothingActive");
+            }}
+          >
+            women's clothing
+          </button>
         </div>
-        <form class="max-w-sm mx-auto">
-          <label
-            for="countries"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Select 
-          </label>
-          <select
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-36 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onChange={(e) => sortByPrice(e.target.value)}
-          >
-            <option selected>Select Category</option>
-            <option value="electronics">electronics</option>
-            <option value="jewelery">jewelery</option>
-            <option value="men's clothing">men's clothing</option>
-            <option value="women's clothing">women's clothing</option>
-          </select>
-        </form>
         <div className="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
             <div className="">

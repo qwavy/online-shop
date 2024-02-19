@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { getSingleProduct } from "../api/products/productsApi";
+import { getSingleProduct } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import Header from "../layouts/Header";

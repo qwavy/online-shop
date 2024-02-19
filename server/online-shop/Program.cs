@@ -18,6 +18,7 @@ var cart = new List<Cart>();
 
 app.MapGet("/cart", () => cart);
 app.MapGet("/cart/{id}", (int id) => cart.FirstOrDefault(item => item.Id == id));
+app.MapGet("/cart/", (int id) => cart.FirstOrDefault(item => item.Id == id));
 app.MapPost("/cart", (Cart cartItem) => 
 {
 
@@ -43,6 +44,16 @@ app.MapDelete("/cart/{id}", (int id) =>
         throw new Exception("not found");
     }
     cart.RemoveAt(index);
+});
+
+
+app.MapGet("/cart/total" , () => {
+    double total = 0;
+    foreach (var item in cart)
+    {
+        total += item.Price;
+    }
+    return Results.Ok(total);
 });
 
 

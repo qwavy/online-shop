@@ -4,7 +4,8 @@ import Header from "../layouts/Header";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
-import { addToCart, getAllProducts } from "../api/products/productsApi";
+import { getAllProducts,addToCart } from "../api/Api";
+// import { addToCart } from "../api/cart/cartApi";
 
 
 const MainPage = () => {

@@ -21,19 +21,17 @@ import {
 import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import { Link } from "react-router-dom";
-import { getCartProducts } from "../api/cart/cartApi";
+import { getCartProducts, getCartTotal } from "../api/Api";
+// import { getCartProducts } from "../api/cart/cartApi";
 
 export default function Cart() {
+
   const [products, setProducts] = useState([]);
-  let orderTotal = 0
-  const getOrderTotal = () => {
-    
-  }
+  const [orderTotal, setOrderTotal] = useState([]);
 
   useEffect(() => {
     getCartProducts(setProducts)
-    getOrderTotal()
-    
+    getCartTotal(setOrderTotal)
   }, [products]);
 
 
@@ -97,7 +95,7 @@ export default function Cart() {
                           ) : null} */}
                           </div>
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            {product.price}
+                            {product.price}$
                           </p>
                           <p className="mt-1 text-xs font-medium text-gray-800">
                             {product.description}
@@ -156,7 +154,7 @@ export default function Cart() {
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Subtotal</dt>
-                  <dd className="text-sm font-medium text-gray-900">$99.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">{orderTotal}$</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex items-center text-sm text-gray-600">
@@ -174,7 +172,7 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                  <dd className="text-sm font-medium text-gray-900">5$</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex text-sm text-gray-600">
@@ -192,14 +190,14 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$8.32</dd>
+                  <dd className="text-sm font-medium text-gray-900">8.32$</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Order total
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    {orderTotal}
+                    {Math.ceil(orderTotal + 5 + 8.32)}$
                   </dd>
                 </div>
               </dl>
