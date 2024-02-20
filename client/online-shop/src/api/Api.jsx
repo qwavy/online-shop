@@ -46,17 +46,21 @@ export const addToCart = (item) => {
     .then((data) => console.log(data));
 };
 
-
 export const getCartTotal = (setOrderTotal) => {
-    fetch("https://localhost:7093/cart/total")
+  fetch("https://localhost:7093/cart/total")
     .then((res) => res.json())
     .then((data) => {
       setOrderTotal(data);
     });
-}
+};
 
-export const sortByCategory = (value,setProducts) => {
-    fetch(`https://fakestoreapi.com/products/category/${value}`)
+export const sortByCategory = (value, setProducts) => {
+  if (value == "all") {
+    return fetch(`https://fakestoreapi.com/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  };
+  }
+  fetch(`https://fakestoreapi.com/products/category/${value}`)
+    .then((res) => res.json())
+    .then((data) => setProducts(data));
+};

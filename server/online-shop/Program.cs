@@ -1,5 +1,10 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<CartDb>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
+});
 
 builder.Services.AddCors(options =>
 {
@@ -10,46 +15,67 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-// builder.Services.AddCors();
+
+
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<CartDb>();
+    db.Database.EnsureCreated();
+
+}
 
 app.UseCors();
 
-var cart = new List<Cart>();
 
-app.MapGet("/cart", () => cart);
-app.MapGet("/cart/{id}", (int id) => cart.FirstOrDefault(item => item.Id == id));
-app.MapGet("/cart/", (int id) => cart.FirstOrDefault(item => item.Id == id));
-app.MapPost("/cart", (Cart cartItem) => 
-{
-
-    cart.Add(cartItem);
-});
+app.MapGet("/cart", async (CartDb db) => await db.Carts.ToListAsync());
 
 
+app.MapGet("/cart/{id}", async (int id, CartDb db) =>
+    await db.Carts.FirstOrDefaultAsync(item => item.Id == id) is Cart cart
+    ? Results.Ok(cart)
+    : Results.NotFound());
 
-app.MapPut("/cart", (Cart cartItem) =>
-{
-    var index = cart.FindIndex(item => item.Id == cartItem.Id);
-    if (index < 0)
+// app.MapGet("/cart/", (int id) => cart.FirstOrDefault(item => item.Id == id));
+app.MapPost("/cart", async ([FromBody] Cart cartItem,[FromServices] CartDb db) =>
     {
-        throw new Exception("not found");
-    }
-    cart[index] = cartItem;
-});
-app.MapDelete("/cart/{id}", (int id) =>
+        db.Carts.Add(cartItem);
+        await db.SaveChangesAsync();
+        return Results.Created($"/cart/{cartItem.Id}" ,cartItem);
+    });
+
+
+
+
+app.MapPut("/cart", async ([FromBody] Cart cartItem , CartDb db) =>
 {
-    var index = cart.FindIndex(item => item.Id == id);
-    if (index < 0)
-    {
-        throw new Exception("not found");
-    }
-    cart.RemoveAt(index);
+
+    var cartFromDb = await db.Carts.FindAsync(new object[] {cartItem.Id});
+    if (cartFromDb == null) return Results.NotFound();
+    cartFromDb.Title = cartItem.Title;
+    cartFromDb.Price = cartItem.Price;
+    cartFromDb.Category = cartItem.Category;
+    cartFromDb.Description = cartItem.Description;
+    cartFromDb.Image = cartItem.Image;
+
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+app.MapDelete("/cart/{id}", async (int id, CartDb db) =>
+{
+    var cartFromDb = await db.Carts.FindAsync(new object[] {id});
+    if (cartFromDb == null) return Results.NotFound();
+    db.Carts.Remove(cartFromDb);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
 });
 
+app.UseHttpsRedirection();
 
-app.MapGet("/cart/total" , () => {
+app.MapGet("/cart/total", (CartDb db) =>
+{
     double total = 0;
-    foreach (var item in cart)
+    foreach (var item in db.Carts)
     {
         total += item.Price;
     }
@@ -59,6 +85,12 @@ app.MapGet("/cart/total" , () => {
 
 app.Run();
 
+
+public class CartDb : DbContext
+{
+    public CartDb(DbContextOptions<CartDb> options) : base(options) { }
+    public DbSet<Cart> Carts => Set<Cart>();
+}
 
 public class Cart
 {
