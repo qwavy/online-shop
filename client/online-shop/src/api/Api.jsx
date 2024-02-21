@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 
 export const getAllProducts = (setProducts) => {
-  fetch(`https://fakestoreapi.com/products`)
+  fetch(`https://fakestoreapi.com/products/`)
     .then((res) => res.json())
     .then((data) => setProducts(data));
 };
 
 export const getSingleProduct = (id, setProduct) => {
-  fetch(`https://fakestoreapi.com/products/${id}`)
+  fetch(`https://localhost:7093/product${id}`)
     .then((res) => res.json())
     .then((data) => setProduct([data]));
 };
@@ -21,6 +21,12 @@ export const getCartProducts = (setProducts) => {
 };
 
 export const orderTotalCalculate = (data, setOrderTotal) => {};
+
+export const getAllCategories = (setCategories) => {
+  fetch("https://fakestoreapi.com/products/categories")
+    .then((res) => res.json())
+    .then((data) => setCategories(data));
+};
 
 export const deleteItem = (item) => {
   console.log(item);
@@ -56,7 +62,7 @@ export const getCartTotal = (setOrderTotal) => {
 
 export const sortByCategory = (value, setProducts) => {
   if (value == "all") {
-    return fetch(`https://fakestoreapi.com/products`)
+    return fetch(`https://localhost:7093/product`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }

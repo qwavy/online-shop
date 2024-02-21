@@ -1,7 +1,10 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CartDb>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
+});
+builder.Services.AddDbContext<ProductDb>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
 });
@@ -16,36 +19,31 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
-if (app.Environment.IsDevelopment())
+if(app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var db = scope.ServiceProvider.GetRequiredService<CartDb>();
-    db.Database.EnsureCreated();
-
+    var cartDb = scope.ServiceProvider.GetRequiredService<CartDb>();
+    var productDb = scope.ServiceProvider.GetRequiredService<ProductDb>();
+    cartDb.Database.EnsureCreated();
+    productDb.Database.EnsureCreated();
 }
 
 app.UseCors();
 
-
 app.MapGet("/cart", async (CartDb db) => await db.Carts.ToListAsync());
-
+app.MapGet("/product", async (ProductDb db) => await db.Products.ToListAsync());
 
 app.MapGet("/cart/{id}", async (int id, CartDb db) =>
     await db.Carts.FirstOrDefaultAsync(item => item.Id == id) is Cart cart
     ? Results.Ok(cart)
     : Results.NotFound());
 
-// app.MapGet("/cart/", (int id) => cart.FirstOrDefault(item => item.Id == id));
 app.MapPost("/cart", async ([FromBody] Cart cartItem,[FromServices] CartDb db) =>
     {
         db.Carts.Add(cartItem);
         await db.SaveChangesAsync();
         return Results.Created($"/cart/{cartItem.Id}" ,cartItem);
     });
-
-
-
 
 app.MapPut("/cart", async ([FromBody] Cart cartItem , CartDb db) =>
 {
@@ -83,6 +81,53 @@ app.MapGet("/cart/total", (CartDb db) =>
 });
 
 
+
+app.MapGet("/product/{id}", async (int id, ProductDb db) =>
+    await db.Products.FirstOrDefaultAsync(item => item.Id == id) is Product product
+    ? Results.Ok(product)
+    : Results.NotFound());
+
+app.MapPost("/product", async ([FromBody] Product productItem, [FromServices] ProductDb db) =>
+{
+    db.Products.Add(productItem);
+    await db.SaveChangesAsync();
+    return Results.Created($"/product/{productItem.Id}", productItem);
+});
+
+app.MapPut("/product", async ([FromBody] Product productItem, ProductDb db) =>
+{
+    var productFromDb = await db.Products.FindAsync(new object[] { productItem.Id });
+    if (productFromDb == null) return Results.NotFound();
+    productFromDb.Title = productItem.Title;
+    productFromDb.Price = productItem.Price;
+    productFromDb.Category = productItem.Category;
+    productFromDb.Description = productItem.Description;
+    productFromDb.Image = productItem.Image;
+
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+app.MapDelete("/product/{id}", async (int id, ProductDb db) =>
+{
+    var productFromDb = await db.Products.FindAsync(new object[] { id });
+    if (productFromDb == null) return Results.NotFound();
+    db.Products.Remove(productFromDb);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+app.MapGet("/product/total", (ProductDb db) =>
+{
+    double total = 0;
+    foreach (var item in db.Products)
+    {
+        total += item.Price;
+    }
+    return Results.Ok(total);
+});
+
+
 app.Run();
 
 
@@ -93,6 +138,22 @@ public class CartDb : DbContext
 }
 
 public class Cart
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public double Price { get; set; }
+    public string Category { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Image { get; set; } = string.Empty;
+}
+
+public class ProductDb : DbContext
+{
+    public ProductDb(DbContextOptions<ProductDb> options) : base(options) {}
+    public DbSet<Product> Products => Set<Product>(); 
+}
+
+public class Product
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
