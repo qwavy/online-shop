@@ -1,72 +1,104 @@
-import { useEffect } from "react";
+const BASE_URL = "https://localhost:7093";
 
-export const getAllProducts = (setProducts) => {
-  fetch(`https://fakestoreapi.com/products/`)
-    .then((res) => res.json())
-    .then((data) => setProducts(data));
-};
-
-export const getSingleProduct = (id, setProduct) => {
-  fetch(`https://localhost:7093/product${id}`)
-    .then((res) => res.json())
-    .then((data) => setProduct([data]));
-};
-
-export const getCartProducts = (setProducts) => {
-  fetch("https://localhost:7093/cart")
-    .then((res) => res.json())
-    .then((data) => {
-      setProducts(data);
-    });
-};
-
-export const orderTotalCalculate = (data, setOrderTotal) => {};
-
-export const getAllCategories = (setCategories) => {
-  fetch("https://fakestoreapi.com/products/categories")
-    .then((res) => res.json())
-    .then((data) => setCategories(data));
-};
-
-export const deleteItem = (item) => {
-  console.log(item);
-  fetch(`https://localhost:7093/cart/${item.id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-};
-
-export const addToCart = (item) => {
-  fetch("https://localhost:7093/cart", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(item),
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data));
-};
-
-export const getCartTotal = (setOrderTotal) => {
-  fetch("https://localhost:7093/cart/total")
-    .then((res) => res.json())
-    .then((data) => {
-      setOrderTotal(data);
-    });
-};
-
-export const sortByCategory = (value, setProducts) => {
-  if (value == "all") {
-    return fetch(`https://localhost:7093/product`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+const getData = async (url, options = {}) => {
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error:", error.message);
+    throw error;
   }
-  fetch(`https://fakestoreapi.com/products/category/${value}`)
-    .then((res) => res.json())
-    .then((data) => setProducts(data));
+};
+
+export const getAllProducts = async (setProducts) => {
+  try {
+    const data = await getData(`${BASE_URL}/product`);
+    setProducts(data);
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+  }
+};
+
+export const getSingleProduct = async (id, setProduct) => {
+  try {
+    const data = await getData(`${BASE_URL}/product/${id}`);
+    setProduct([data]);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getCartProducts = async (setProducts) => {
+  try {
+    const data = await getData(`${BASE_URL}/cart`);
+    setProducts(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const orderTotalCalculate = async (data, setOrderTotal) => {};
+
+export const getAllCategories = async (setCategories) => {
+  try {
+    const data = await getData(`${BASE_URL}/products/categories`);
+    setCategories(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteItem = async (item) => {
+  try {
+    const data = await fetchData(`${BASE_URL}/cart/${item.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(data);
+  } catch (error) {
+    console.error("Error deleting item from cart:", error);
+  }
+};
+
+export const addToCart = async (item) => {
+  try {
+    const data = await getData(`${BASE_URL}/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getCartTotal = async (setOrderTotal) => {
+
+  try{
+    const data = await getData(`${BASE_URL}/cart/total`)
+    setOrderTotal(data)
+  }catch(e){
+    console.log(e)
+  }
+
+};
+
+export const sortByCategory = async (value, setProducts) => {
+  try{
+    if (value == "all") {
+       const data = await getData(`${BASE_URL}/product`)
+       return setProducts(data)
+    }
+    const data = await getData(`${BASE_URL}/products/category/${value}`)
+    setProducts(data)
+  }catch(e){
+    console.log(e)
+  }
 };

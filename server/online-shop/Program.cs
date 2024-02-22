@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var cartDb = scope.ServiceProvider.GetRequiredService<CartDb>();
@@ -38,17 +38,17 @@ app.MapGet("/cart/{id}", async (int id, CartDb db) =>
     ? Results.Ok(cart)
     : Results.NotFound());
 
-app.MapPost("/cart", async ([FromBody] Cart cartItem,[FromServices] CartDb db) =>
+app.MapPost("/cart", async ([FromBody] Cart cartItem, [FromServices] CartDb db) =>
     {
         db.Carts.Add(cartItem);
         await db.SaveChangesAsync();
-        return Results.Created($"/cart/{cartItem.Id}" ,cartItem);
+        return Results.Created($"/cart/{cartItem.Id}", cartItem);
     });
 
-app.MapPut("/cart", async ([FromBody] Cart cartItem , CartDb db) =>
+app.MapPut("/cart", async ([FromBody] Cart cartItem, CartDb db) =>
 {
 
-    var cartFromDb = await db.Carts.FindAsync(new object[] {cartItem.Id});
+    var cartFromDb = await db.Carts.FindAsync(new object[] { cartItem.Id });
     if (cartFromDb == null) return Results.NotFound();
     cartFromDb.Title = cartItem.Title;
     cartFromDb.Price = cartItem.Price;
@@ -61,7 +61,7 @@ app.MapPut("/cart", async ([FromBody] Cart cartItem , CartDb db) =>
 });
 app.MapDelete("/cart/{id}", async (int id, CartDb db) =>
 {
-    var cartFromDb = await db.Carts.FindAsync(new object[] {id});
+    var cartFromDb = await db.Carts.FindAsync(new object[] { id });
     if (cartFromDb == null) return Results.NotFound();
     db.Carts.Remove(cartFromDb);
     await db.SaveChangesAsync();
@@ -103,6 +103,8 @@ app.MapPut("/product", async ([FromBody] Product productItem, ProductDb db) =>
     productFromDb.Category = productItem.Category;
     productFromDb.Description = productItem.Description;
     productFromDb.Image = productItem.Image;
+    productFromDb.Rate = productItem.Rate;
+    productFromDb.RateCount = productItem.RateCount;
 
     await db.SaveChangesAsync();
     return Results.NoContent();
@@ -128,12 +130,26 @@ app.MapGet("/product/total", (ProductDb db) =>
 });
 
 
+app.MapGet("/products/categories", async (ProductDb db) =>
+{
+    var categories = await db.Products.Select(p => p.Category).Distinct().ToListAsync();
+    return Results.Ok(categories);
+});
+app.MapGet("/products/category/{category}", async (string category, ProductDb db) =>
+{
+    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+    return Results.Ok(products);
+});
 app.Run();
 
 
 public class CartDb : DbContext
 {
-    public CartDb(DbContextOptions<CartDb> options) : base(options) { }
+    public CartDb(DbContextOptions<CartDb> options) : base(options)
+    {
+        // this.Database.EnsureDeleted();
+        // this.Database.EnsureCreated();
+    }
     public DbSet<Cart> Carts => Set<Cart>();
 }
 
@@ -149,8 +165,12 @@ public class Cart
 
 public class ProductDb : DbContext
 {
-    public ProductDb(DbContextOptions<ProductDb> options) : base(options) {}
-    public DbSet<Product> Products => Set<Product>(); 
+    public ProductDb(DbContextOptions<ProductDb> options) : base(options)
+    {
+        // this.Database.EnsureDeleted();
+        // this.Database.EnsureCreated();
+    }
+    public DbSet<Product> Products => Set<Product>();
 }
 
 public class Product
@@ -161,4 +181,7 @@ public class Product
     public string Category { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
+    public double Rate { get; set; }
+    public double RateCount { get; set; }
+
 }
