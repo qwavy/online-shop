@@ -1,4 +1,4 @@
-import { StarIcon } from "@heroicons/react/20/solid";
+import { StarIcon,ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { getAllProducts,addToCart } from "../api/Api";
 
@@ -42,10 +42,10 @@ const ProductItem = ({products}) => {
             </div>
           </Link>
           <button
-            class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
+            class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
             onClick={() => addToCart(product)}
           >
-            Button
+            <ShoppingCartIcon className="h-6 w-6"/>
           </button>
         </div>
       ))}

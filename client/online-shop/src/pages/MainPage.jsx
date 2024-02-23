@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
@@ -25,6 +26,7 @@ const MainPage = () => {
           <ProductItem products={products}/>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

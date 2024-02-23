@@ -11,6 +11,7 @@ import Cart from './pages/Cart.jsx';
 import ProductPage from './pages/ProductPage.jsx';
 import Shop from './pages/Shop.jsx';
 import Checkout from './pages/Checkout.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     path:"/checkout",
     element:<Checkout/>
   },
+  {
+    path:"/adminPanel",
+    element:<NotFound/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

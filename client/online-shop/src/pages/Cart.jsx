@@ -71,7 +71,7 @@ export default function Cart() {
                     <div className="flex-shrink-0">
                       <img
                         src={product.image}
-                        className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
+                        className="h-24 w-48 rounded-md object-cover object-center sm:h-48 sm:w-64 "
                       />
                     </div>
 

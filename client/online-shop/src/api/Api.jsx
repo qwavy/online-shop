@@ -15,7 +15,9 @@ const getData = async (url, options = {}) => {
 
 export const getAllProducts = async (setProducts) => {
   try {
-    const data = await getData(`${BASE_URL}/product`);
+    // const data = await getData(`${BASE_URL}/product`);
+    const data = await getData(`https://30fa5ea7fed7cf6b.mokky.dev/product`);
+
     setProducts(data);
   } catch (error) {
     console.error("Error fetching all products:", error);
@@ -50,6 +52,8 @@ export const getAllCategories = async (setCategories) => {
     console.log(e);
   }
 };
+
+
 
 export const deleteItem = async (item) => {
   try {
