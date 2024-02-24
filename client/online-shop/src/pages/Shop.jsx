@@ -17,13 +17,13 @@ const Shop = () => {
     setSortByCategoryButton(value);
   };
 
-  const searchProducts = (value) => {
-    const copy_products = JSON.parse(JSON.stringify(products));
-    const filtered = copy_products.filter((product) =>
-      product.title.toLowerCase().includes(value.toLowerCase())
-    );
-    setProducts(filtered);
-  };
+  // const searchProducts = (value) => {
+  //   const copy_products = JSON.parse(JSON.stringify(products));
+  //   const filtered = copy_products.filter((product) =>
+  //     product.title.toLowerCase().includes(value.toLowerCase())
+  //   );
+  //   setProducts(filtered);
+  // };
 
   return (
     <>
