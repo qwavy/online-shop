@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 import Header from "../layouts/Header";
 import { Link } from "react-router-dom";
@@ -6,24 +8,22 @@ import { addToCart, getAllCategories } from "../api/Api";
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../layouts/ProductItem";
 const Shop = () => {
+  const { productCategory } = useParams();
+
+
   const [products, setProducts] = useState([]);
   const [categories,setCategories] = useState([])
   const [sortByCategoryButton, setSortByCategoryButton] = useState("all");
   useEffect(() => {
     getAllCategories(setCategories)
+    sortByCategory(productCategory,setProducts)
+    console.log(productCategory)
   },[])
 
   const sortByCategoryButtonActive = (value) => {
     setSortByCategoryButton(value);
   };
 
-  // const searchProducts = (value) => {
-  //   const copy_products = JSON.parse(JSON.stringify(products));
-  //   const filtered = copy_products.filter((product) =>
-  //     product.title.toLowerCase().includes(value.toLowerCase())
-  //   );
-  //   setProducts(filtered);
-  // };
 
   return (
     <>
@@ -44,6 +44,7 @@ const Shop = () => {
             />
           </div>
           <div>
+
             <button
               className={
                 sortByCategoryButton === "all"
@@ -58,6 +59,7 @@ const Shop = () => {
               all
             </button>
             {categories.map((category) => (
+              <Link to={`/shop/${category}`}>
               <button
                 className={
                   sortByCategoryButton === category
@@ -71,6 +73,7 @@ const Shop = () => {
               >
                 {category}
               </button>
+              </Link>
             ))}
           </div>
         </div>

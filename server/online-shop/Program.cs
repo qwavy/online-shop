@@ -28,7 +28,6 @@ app.UseCors();
 
 app.MapGet("/cart", async (ApplicationDbContext db) => await db.Carts.ToListAsync());
 app.MapGet("/product", async (ApplicationDbContext db) => await db.Products.ToListAsync());
-
 app.MapGet("/cart/{id}", async (int id, ApplicationDbContext db) =>
     await db.Carts.FirstOrDefaultAsync(item => item.Id == id) is Cart cart
     ? Results.Ok(cart)
@@ -135,6 +134,11 @@ app.MapGet("/products/category/{category}", async (string category, ApplicationD
 {
     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
     return Results.Ok(products);
+});
+app.MapGet("/products/topRate/", async ( ApplicationDbContext db) =>
+{
+    var topRateProducts = await db.Products.Where(item => item.Rate >= 4).ToListAsync();
+    return Results.Ok(topRateProducts);
 });
 app.Run();
 

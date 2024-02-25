@@ -20,7 +20,7 @@ const ProductPage = () => {
   ]);
   useEffect(() => {
     getSingleProduct(productId, setProduct);
-    console.log(product);
+    console.log(productId);
   }, []);
   return (
     <>
