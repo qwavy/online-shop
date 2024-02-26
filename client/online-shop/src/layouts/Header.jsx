@@ -41,7 +41,7 @@ const Header = () => {
               </a>
               <a
                 class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
-                href="/Shop"
+                href="/Shop/all"
               >
                 Shop
               </a>

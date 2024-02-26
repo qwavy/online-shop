@@ -2,41 +2,51 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import { StarIcon } from "@heroicons/react/20/solid";
+import {
+  StarIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, addToCart, getTopRateProducts } from "../api/Api";
+import { getAllProducts, addToCart, getTopRateProducts, getSearchResults } from "../api/Api";
 import ProductItem from "../layouts/ProductItem";
 // import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
-
-
+  const [searchValue,setSearchValue] = useState("")
   const [topRateProducts, setTopRateProducts] = useState([]);
-  const [currentIndex,setCurrentIndex] = useState(0)
-  const [currentIndex2,setCurrentIndex2] = useState(4)
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   useEffect(() => {
     getAllProducts(setProducts);
-    getTopRateProducts(setTopRateProducts)
+    getTopRateProducts(currentIndex, setTopRateProducts);
     console.log(topRateProducts);
   }, []);
 
   const prevTopRateProducts = () => {
-    setCurrentIndex(currentIndex-4)
-    setCurrentIndex2(currentIndex2-4)
-  }
+    setCurrentIndex(currentIndex - 1);
+    getTopRateProducts(currentIndex, setTopRateProducts);
+  };
   const nextTopRateProducts = () => {
-      setCurrentIndex(currentIndex+4)
-      setCurrentIndex2(currentIndex2+4)
-  }
-
+    setCurrentIndex(currentIndex + 1);
+    getTopRateProducts(currentIndex, setTopRateProducts);
+  };
 
   return (
     <>
       <Header />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+        <section>
+          <h1 className="font-roboto font-bold text-5xl  mb-10" >Search</h1>
+          <div className="flex justify-center">
+            <input className="border-2 w-2/4 p-4 border-gray-500 rounded-xl" onChange={(e) => setSearchValue(e.target.value.toLowerCase())}/>
+            <button onClick={() => getSearchResults(searchValue)}>
+              Search
+            </button>
+          </div>
+        </section>
         <section className="flex flex-col justify-center lg:flex-row  w-full">
           <div className="w-full lg:w-2/4 m-10  ">
             <Link to="/product/18">
@@ -141,13 +151,20 @@ const MainPage = () => {
           Top Rate Products
         </h1>
         <section className="mt-10">
-        <button onClick={() => prevTopRateProducts()}>prev</button>
+          <div className="flex justify-center items-center">
+            <ArrowLeftIcon
+              onClick={() => prevTopRateProducts()}
+              className="w-20 h-20"
+            />
 
-          <div className="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <ProductItem products={topRateProducts.slice(currentIndex,currentIndex2)} />
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <ProductItem products={topRateProducts} />
+            </div>
+            <ArrowRightIcon
+              onClick={() => nextTopRateProducts()}
+              className="w-20 h-20"
+            />
           </div>
-          <button onClick={() => nextTopRateProducts()}>next</button>
         </section>
       </div>
       {/* <Footer/> */}

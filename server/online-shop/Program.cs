@@ -135,11 +135,18 @@ app.MapGet("/products/category/{category}", async (string category, ApplicationD
     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
     return Results.Ok(products);
 });
-app.MapGet("/products/topRate/", async ( ApplicationDbContext db) =>
+app.MapGet("/products/topRate/{index}", async (int index, ApplicationDbContext db) =>
 {
     var topRateProducts = await db.Products.Where(item => item.Rate >= 4).ToListAsync();
-    return Results.Ok(topRateProducts);
+     
+    return Results.Ok(topRateProducts[(index-1)..(index+3)]);
 });
+app.MapGet("/products/searchResults/{value}" , async (string value, ApplicationDbContext db) =>
+{
+    var searchProducts = await db.Products.Where(item => item.Title.ToLower().StartsWith(value.ToLower())).ToListAsync();
+    return Results.Ok(searchProducts);
+});
+
 app.Run();
 
 

@@ -107,12 +107,23 @@ export const sortByCategory = async (value, setProducts) => {
   }
 };
 
-export const getTopRateProducts = async (setTopRateProducts) => {
+export const getTopRateProducts = async (page,setTopRateProducts) => {
   try{
-    const data = await getData(`${BASE_URL}/products/topRate`)
-    console.log(data)
+    const data = await getData(`${BASE_URL}/products/topRate/${page}`)
+    console.log(page)
     setTopRateProducts(data)
   }catch(e){
     console.log(e)
+  }
+}
+
+export const getSearchResults = async (value,setProducts) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/searchResults/${value}`)
+    console.log(data)
+  }
+  catch(e){
+    console.error(e)
+    throw e
   }
 }
