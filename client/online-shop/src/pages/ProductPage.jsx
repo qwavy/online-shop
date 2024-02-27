@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { getSingleProduct,addToCart } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import Header from "../layouts/Header";
+import Header from "../templates/Header";
 
 const ProductPage = () => {
   const { productId } = useParams();

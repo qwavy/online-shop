@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <>
       <nav class="bg-white shadow">
-        <div className="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
+        <div className="container mx-auto px-6 py-3 flex md:justify-between md:items-center">
           <div class="flex justify-between items-center">
             <a
               class="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700"
@@ -12,7 +12,7 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex justify-between">
-            <div className="mx-20">
+            <div className="">
               <h2 className="font-bold">Stack Frontend</h2>
               <ul>
                 <li>Js</li>
@@ -20,7 +20,7 @@ const Footer = () => {
                 <li>Tailwind</li>
               </ul>
             </div>
-            <div  className="mx-20">
+            <div  className="">
               <h2 className="font-bold">Stack Backend</h2>
               <ul>
                 <li>.Net</li>
@@ -28,7 +28,7 @@ const Footer = () => {
                 <li>PostgreSql</li>
               </ul>
             </div>
-            <div  className="mx-20">
+            <div  className="">
               <h2 className="font-bold">Stack Frontend</h2>
               <ul>
                 <li>Js</li>

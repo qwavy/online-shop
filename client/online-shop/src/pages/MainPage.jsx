@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
+import Header from "../templates/Header";
+import Footer from "../templates/Footer";
 import {
   StarIcon,
   ArrowLeftIcon,
@@ -10,12 +10,11 @@ import {
 import { Link } from "react-router-dom";
 
 import { getAllProducts, addToCart, getTopRateProducts, getSearchResults } from "../api/Api";
-import ProductItem from "../layouts/ProductItem";
+import ProductItem from "../templates/ProductItem";
 // import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
-  const [searchValue,setSearchValue] = useState("")
   const [topRateProducts, setTopRateProducts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
 
@@ -38,17 +37,9 @@ const MainPage = () => {
     <>
       <Header />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-        <section>
-          <h1 className="font-roboto font-bold text-5xl  mb-10" >Search</h1>
-          <div className="flex justify-center">
-            <input className="border-2 w-2/4 p-4 border-gray-500 rounded-xl" onChange={(e) => setSearchValue(e.target.value.toLowerCase())}/>
-            <button onClick={() => getSearchResults(searchValue)}>
-              Search
-            </button>
-          </div>
-        </section>
+
         <section className="flex flex-col justify-center lg:flex-row  w-full">
-          <div className="w-full lg:w-2/4 m-10  ">
+          <div className="w-11/12 lg:w-2/4 m-10  ">
             <Link to="/product/18">
               <div className="bg-cyan-300 h-44 mb-10 flex justify-around rounded-xl">
                 <div className="flex items-center justify-center flex-col ">
@@ -74,7 +65,7 @@ const MainPage = () => {
               <img src="https://i.imgur.com/Bb74eBH.png" className="" />
             </div>
           </div>
-          <div className="w-full lg:w-2/4 bg-rose-200 h-96 m-10 rounded-xl  flex flex-col justify-around">
+          <div className="w-11/12 lg:w-2/4 bg-rose-200 h-96 m-10 rounded-xl  flex flex-col justify-around">
             <div className="w-full flex flex-col items-center">
               <span className="text-center font-roboto font-bold w-full ">
                 Lifelong Tribe 20T
@@ -167,7 +158,7 @@ const MainPage = () => {
           </div>
         </section>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </>
   );
 };

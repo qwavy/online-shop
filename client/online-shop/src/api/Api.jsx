@@ -119,8 +119,12 @@ export const getTopRateProducts = async (page,setTopRateProducts) => {
 
 export const getSearchResults = async (value,setProducts) => {
   try{
+    if(value == ""){
+      const data = await getData(`${BASE_URL}/product`)
+      setProducts(data)
+    }
     const data = await getData(`${BASE_URL}/products/searchResults/${value}`)
-    console.log(data)
+    setProducts(data)
   }
   catch(e){
     console.error(e)

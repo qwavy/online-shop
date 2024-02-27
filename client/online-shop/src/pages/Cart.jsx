@@ -19,7 +19,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
-import Header from "../layouts/Header";
+import Header from "../templates/Header";
 import { Link } from "react-router-dom";
 import { getCartProducts, getCartTotal } from "../api/Api";
 // import { getCartProducts } from "../api/cart/cartApi";
@@ -90,9 +90,6 @@ export default function Cart() {
                           </div>
                           <div className="mt-1 flex text-sm">
                             <p className="text-gray-500">{product.category}</p>
-                            {/* {product.size ? (
-                            <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">{product.size}</p>
-                          ) : null} */}
                           </div>
                           <p className="mt-1 text-sm font-medium text-gray-900">
                             {product.price}$
@@ -103,20 +100,6 @@ export default function Cart() {
                         </div>
 
                         <div className="mt-4 sm:mt-0 sm:pr-9">
-                          {/* <select
-                          // id={`quantity-${productIdx}`}
-                          // name={`quantity-${productIdx}`}
-                          className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                        >
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
-                          <option value={6}>6</option>
-                          <option value={7}>7</option>
-                          <option value={8}>8</option>
-                        </select> */}
 
                           <div className="absolute right-0 top-0">
                             <button
@@ -139,7 +122,6 @@ export default function Cart() {
               </ul>
             </section>
 
-            {/* Order summary */}
             <section
               aria-labelledby="summary-heading"
               className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
