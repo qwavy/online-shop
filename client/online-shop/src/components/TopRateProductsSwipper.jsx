@@ -1,17 +1,34 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Grid, Pagination } from "swiper/modules";
+import "swiper/css";
 import { StarIcon,ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { getAllProducts,addToCart } from "../api/Api";
+import ProductItem from "../templates/ProductItem";
 
-
-const ProductItem = ({products}) => {
+const TopRateProductsSwipper = ({ products }) => {
+  console.log(products);
   return (
-    <>
+    <Swiper
+      slidesPerView={3}
+      grid={{
+        rows: 1,
+      }}
+      spaceBetween={30}
+      pagination={{
+        clickable: true,
+      }}
+      modules={[Grid, Pagination]}
+      className="grid grid-rows-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
       {products.map((product) => (
         <div className="">
+      <SwiperSlide>
+
+
           <Link
             to={`/product/${product.id}`}
             className="flex flex-col justify-center"
-            key={product.id}
           >
             <img
               src={product.image}
@@ -46,11 +63,13 @@ const ProductItem = ({products}) => {
             class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
             onClick={() => addToCart(product)}
           >
-            <ShoppingCartIcon className="h-6 w-6"/>
+            <ShoppingCartIcon className="h-6 w-6" />
           </button>
+      </SwiperSlide>
+
         </div>
       ))}
-    </>
+    </Swiper>
   );
 };
-export default ProductItem;
+export default TopRateProductsSwipper;

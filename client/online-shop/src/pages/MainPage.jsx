@@ -11,27 +11,19 @@ import { Link } from "react-router-dom";
 
 import { getAllProducts, addToCart, getTopRateProducts, getSearchResults } from "../api/Api";
 import ProductItem from "../templates/ProductItem";
+import TopRateProductsSwipper from "../components/TopRateProductsSwipper";
 // import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
   const [topRateProducts, setTopRateProducts] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(1);
 
   useEffect(() => {
     getAllProducts(setProducts);
-    getTopRateProducts(currentIndex, setTopRateProducts);
+    getTopRateProducts( setTopRateProducts);
     console.log(topRateProducts);
   }, []);
 
-  const prevTopRateProducts = () => {
-    setCurrentIndex(currentIndex - 1);
-    getTopRateProducts(currentIndex, setTopRateProducts);
-  };
-  const nextTopRateProducts = () => {
-    setCurrentIndex(currentIndex + 1);
-    getTopRateProducts(currentIndex, setTopRateProducts);
-  };
 
   return (
     <>
@@ -141,21 +133,8 @@ const MainPage = () => {
         <h1 className="font-roboto font-bold text-5xl  mb-10 mt-10">
           Top Rate Products
         </h1>
-        <section className="mt-10">
-          <div className="flex justify-center items-center">
-            <ArrowLeftIcon
-              onClick={() => prevTopRateProducts()}
-              className="w-20 h-20"
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <ProductItem products={topRateProducts} />
-            </div>
-            <ArrowRightIcon
-              onClick={() => nextTopRateProducts()}
-              className="w-20 h-20"
-            />
-          </div>
+        <section>
+          <TopRateProductsSwipper products={topRateProducts}/>
         </section>
       </div>
       <Footer/>

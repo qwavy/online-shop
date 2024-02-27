@@ -2,8 +2,8 @@ const Footer = () => {
   return (
     <>
       <nav class="bg-white shadow">
-        <div className="container mx-auto px-6 py-3 flex md:justify-between md:items-center">
-          <div class="flex justify-between items-center">
+        <div className="container mx-auto px-6 py-3  sm:flex justify-between items-center">
+          <div class="flex justify-between items-center mb-20 sm:mb-0">
             <a
               class="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700"
               href="#"
@@ -11,7 +11,7 @@ const Footer = () => {
               Brand
             </a>
           </div>
-          <div className="flex justify-between">
+          <div className="grid grid-rows-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-2/4 ">
             <div className="">
               <h2 className="font-bold">Stack Frontend</h2>
               <ul>

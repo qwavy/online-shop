@@ -13,7 +13,7 @@ const Shop = () => {
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [sortByCategoryButton, setSortByCategoryButton] = useState("all");
+  const [sortByCategoryButton, setSortByCategoryButton] = useState(productCategory);
   useEffect(() => {
     getAllCategories(setCategories);
     sortByCategory(productCategory, setProducts);
@@ -38,9 +38,6 @@ const Shop = () => {
                 onChange={(e) => getSearchResults(e.target.value.toLowerCase(),setProducts)}
                 placeholder="Search Bar"
               />
-              {/* <button onClick={() => getSearchResults(searchValue,setProducts)}>
-                Search
-              </button> */}
             </div>
           </section>
           <div>
@@ -58,7 +55,7 @@ const Shop = () => {
               all
             </button>
             {categories.map((category) => (
-              <Link to={`/shop/${category}`}>
+              <Link to={`/shop/${category}`} key={category}>
                 <button
                   className={
                     sortByCategoryButton === category
