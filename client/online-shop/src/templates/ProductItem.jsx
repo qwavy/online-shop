@@ -39,7 +39,7 @@ const ProductItem = ({products}) => {
                   )}
                 </div>
               ))}
-              <span className="text-xs text-gray-500">{product.rateCount}</span>
+              <span className="text-xs text-gray-500 m-1">{product.rateCount}</span>
             </div>
           </Link>
           <button

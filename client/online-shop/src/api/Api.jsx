@@ -130,3 +130,49 @@ export const getSearchResults = async (value,setProducts) => {
     throw e
   }
 }
+
+
+export const sortByAsscendingPrice = async (category,setProducts) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/ascending`)
+    setProducts(data)
+
+  }
+  catch(e){
+    console.error(e)
+    throw e
+  }
+}
+export const sortByDescendingPrice = async (category,setProducts) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/descending`)
+    setProducts(data)
+
+  }
+  catch(e){
+    console.error(e)
+    throw e
+  }
+}
+export const sortByPopularity = async (category,setProducts) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/popularity`)
+    setProducts(data)
+
+  }
+  catch(e){
+    console.error(e)
+    throw e
+  }
+}
+export const sortByRating = async (category,setProducts) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/rate`)
+    setProducts(data)
+
+  }
+  catch(e){
+    console.error(e)
+    throw e
+  }
+}

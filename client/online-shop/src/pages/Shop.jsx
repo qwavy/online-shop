@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import Header from "../templates/Header";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { addToCart, getAllCategories , getSearchResults } from "../api/Api";
+import { addToCart, getAllCategories , getSearchResults, sortByAsscendingPrice, sortByDescendingPrice, sortByPopularity, sortByRating } from "../api/Api";
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../templates/ProductItem";
 const Shop = () => {
   const { productCategory } = useParams();
   const [searchValue,setSearchValue] = useState("")
+  const [sortValue,setSortValue] = useState("")
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -19,6 +20,18 @@ const Shop = () => {
     sortByCategory(productCategory, setProducts);
     console.log(productCategory);
   }, []);
+  useEffect(() => {
+    if(sortValue == "rate"){
+      sortByRating(sortByCategoryButton,setProducts)
+    }else if(sortValue == "popularity"){
+      sortByPopularity(sortByCategoryButton,setProducts)
+    }
+    else if(sortValue == "asscending"){
+      sortByAsscendingPrice(sortByCategoryButton,setProducts)
+    }else if(sortValue == "descending"){
+      sortByDescendingPrice(sortByCategoryButton,setProducts)
+    }
+  },[sortValue])
 
   const sortByCategoryButtonActive = (value) => {
     setSortByCategoryButton(value);
@@ -39,6 +52,15 @@ const Shop = () => {
                 placeholder="Search Bar"
               />
             </div>
+          </section>
+          <section>
+            <select onChange={(e) => setSortValue(e.target.value)}>
+              <option value="rate">rate</option>
+              <option value="popularity">popularity</option>
+              <option value="asscending">asscending</option>
+              <option value="descending">descending</option>
+            </select>
+
           </section>
           <div>
             <button

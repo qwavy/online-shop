@@ -54,7 +54,7 @@ app.MapPut("/cart", async ([FromBody] Cart cartItem, ApplicationDbContext db) =>
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
-app.MapDelete("/cart/{id}", async (int id,  ApplicationDbContext db) =>
+app.MapDelete("/cart/{id}", async (int id, ApplicationDbContext db) =>
 {
     var cartFromDb = await db.Carts.FindAsync(new object[] { id });
     if (cartFromDb == null) return Results.NotFound();
@@ -65,7 +65,7 @@ app.MapDelete("/cart/{id}", async (int id,  ApplicationDbContext db) =>
 
 app.UseHttpsRedirection();
 
-app.MapGet("/cart/total", ( ApplicationDbContext db) =>
+app.MapGet("/cart/total", (ApplicationDbContext db) =>
 {
     double total = 0;
     foreach (var item in db.Carts)
@@ -77,19 +77,19 @@ app.MapGet("/cart/total", ( ApplicationDbContext db) =>
 
 
 
-app.MapGet("/product/{id}", async (int id,  ApplicationDbContext db) =>
+app.MapGet("/product/{id}", async (int id, ApplicationDbContext db) =>
     await db.Products.FirstOrDefaultAsync(item => item.Id == id) is Product product
     ? Results.Ok(product)
     : Results.NotFound());
 
-app.MapPost("/product", async ([FromBody] Product productItem, [FromServices]  ApplicationDbContext db) =>
+app.MapPost("/product", async ([FromBody] Product productItem, [FromServices] ApplicationDbContext db) =>
 {
     db.Products.Add(productItem);
     await db.SaveChangesAsync();
     return Results.Created($"/product/{productItem.Id}", productItem);
 });
 
-app.MapPut("/product", async ([FromBody] Product productItem,  ApplicationDbContext db) =>
+app.MapPut("/product", async ([FromBody] Product productItem, ApplicationDbContext db) =>
 {
     var productFromDb = await db.Products.FindAsync(new object[] { productItem.Id });
     if (productFromDb == null) return Results.NotFound();
@@ -105,7 +105,7 @@ app.MapPut("/product", async ([FromBody] Product productItem,  ApplicationDbCont
     return Results.NoContent();
 });
 
-app.MapDelete("/product/{id}", async (int id,  ApplicationDbContext db) =>
+app.MapDelete("/product/{id}", async (int id, ApplicationDbContext db) =>
 {
     var productFromDb = await db.Products.FindAsync(new object[] { id });
     if (productFromDb == null) return Results.NotFound();
@@ -114,7 +114,7 @@ app.MapDelete("/product/{id}", async (int id,  ApplicationDbContext db) =>
     return Results.NoContent();
 });
 
-app.MapGet("/product/total", ( ApplicationDbContext db) =>
+app.MapGet("/product/total", (ApplicationDbContext db) =>
 {
     double total = 0;
     foreach (var item in db.Products)
@@ -125,7 +125,7 @@ app.MapGet("/product/total", ( ApplicationDbContext db) =>
 });
 
 
-app.MapGet("/products/categories", async ( ApplicationDbContext db) =>
+app.MapGet("/products/categories", async (ApplicationDbContext db) =>
 {
     var categories = await db.Products.Select(p => p.Category).Distinct().ToListAsync();
     return Results.Ok(categories);
@@ -135,18 +135,65 @@ app.MapGet("/products/category/{category}", async (string category, ApplicationD
     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
     return Results.Ok(products);
 });
-app.MapGet("/products/topRate/", async ( ApplicationDbContext db) =>
+app.MapGet("/products/topRate/", async (ApplicationDbContext db) =>
 {
     var topRateProducts = await db.Products.Where(item => item.Rate >= 4).ToListAsync();
-     
+
     return Results.Ok(topRateProducts);
 });
-app.MapGet("/products/searchResults/{value}" , async (string value, ApplicationDbContext db) =>
+app.MapGet("/products/searchResults/{value}", async (string value, ApplicationDbContext db) =>
 {
     var searchProducts = await db.Products.Where(item => item.Title.ToLower().StartsWith(value.ToLower())).ToListAsync();
     return Results.Ok(searchProducts);
 });
+app.MapGet("/products/category/{category}/sortBy/descending", async (string category, ApplicationDbContext db) =>
+{
+    if (category == "all")
+    {
 
+        var sortedProductsAll = db.Products.OrderByDescending(product => product.Price);
+        return Results.Ok(sortedProductsAll);
+    }
+    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+    var sortedProducts = products.OrderByDescending(product => product.Price);
+    return Results.Ok(sortedProducts);
+});
+app.MapGet("/products/category/{category}/sortBy/ascending", async (string category, ApplicationDbContext db) =>
+{
+    if (category == "all")
+    {
+
+        var sortedProductsAll = db.Products.OrderBy(product => product.Price);
+        return Results.Ok(sortedProductsAll);
+    }
+    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+    var sortedProducts = products.OrderBy(product => product.Price);
+    return Results.Ok(sortedProducts);
+});
+app.MapGet("/products/category/{category}/sortBy/popularity", async (string category, ApplicationDbContext db) =>
+{
+    if (category == "all")
+    {
+
+        var sortedProductsAll = db.Products.OrderByDescending(product => product.RateCount);
+        return Results.Ok(sortedProductsAll);
+    }
+    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+    var sortedProducts = products.OrderByDescending(product => product.RateCount);
+    return Results.Ok(sortedProducts);
+});
+app.MapGet("/products/category/{category}/sortBy/rate", async (string category, ApplicationDbContext db) =>
+{
+    if (category == "all")
+    {
+
+        var sortedProductsAll = db.Products.OrderByDescending(product => product.Rate);
+        return Results.Ok(sortedProductsAll);
+    }
+    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+    var sortedProducts = products.OrderByDescending(product => product.Rate);
+    return Results.Ok(sortedProducts);
+});
 app.Run();
 
 
