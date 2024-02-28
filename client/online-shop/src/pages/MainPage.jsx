@@ -27,7 +27,6 @@ const MainPage = () => {
 
   return (
     <>
-      <Header />
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
 
         <section className="flex flex-col justify-center lg:flex-row  w-full">
@@ -137,7 +136,6 @@ const MainPage = () => {
           <TopRateProductsSwipper products={topRateProducts}/>
         </section>
       </div>
-      <Footer/>
     </>
   );
 };
