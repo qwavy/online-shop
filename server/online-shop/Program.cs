@@ -130,10 +130,39 @@ app.MapGet("/products/categories", async (ApplicationDbContext db) =>
     var categories = await db.Products.Select(p => p.Category).Distinct().ToListAsync();
     return Results.Ok(categories);
 });
-app.MapGet("/products/category/{category}", async (string category, ApplicationDbContext db) =>
+app.MapGet("/products/category/{category}", async (string category, string? sortingMethod, ApplicationDbContext db) =>
 {
-    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
-    return Results.Ok(products);
+    var productsByCategory = await db.Products.Where(item => item.Category == category).ToListAsync();
+    if (sortingMethod == "descending")
+    {
+        if (category == "all")
+        {
+            var sortedProductsAllCategory = db.Products.OrderByDescending(product => product.Price);
+            return Results.Ok(sortedProductsAllCategory);
+        }
+        var sortedProducts = productsByCategory.OrderByDescending(product => product.Price);
+        return Results.Ok(sortedProducts);
+    }
+    else if (sortingMethod == "ascending")
+    {
+        var sortedProducts = productsByCategory.OrderBy(product => product.Price);
+        return Results.Ok(sortedProducts);
+    }
+    else if (sortingMethod == "rate")
+    { 
+        var sortedProducts = productsByCategory.OrderByDescending(product => product.Rate);
+        return Results.Ok(sortedProducts);
+    }
+    else if (sortingMethod == "popularity")
+    {
+        var sortedProducts = productsByCategory.OrderByDescending(product => product.RateCount);
+        return Results.Ok(sortedProducts);
+    }
+    else if (sortingMethod == "")   
+    {
+        return Results.Ok(productsByCategory);
+    }
+        return Results.Ok(productsByCategory);
 });
 app.MapGet("/products/topRate/", async (ApplicationDbContext db) =>
 {
@@ -146,54 +175,54 @@ app.MapGet("/products/searchResults/{value}", async (string value, ApplicationDb
     var searchProducts = await db.Products.Where(item => item.Title.ToLower().StartsWith(value.ToLower())).ToListAsync();
     return Results.Ok(searchProducts);
 });
-app.MapGet("/products/category/{category}/sortBy/descending", async (string category, ApplicationDbContext db) =>
-{
-    if (category == "all")
-    {
+// app.MapGet("/products/category/{category}/sortBy/descending", async (string category, ApplicationDbContext db) =>
+// {
+//     if (category == "all")
+//     {
 
-        var sortedProductsAll = db.Products.OrderByDescending(product => product.Price);
-        return Results.Ok(sortedProductsAll);
-    }
-    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
-    var sortedProducts = products.OrderByDescending(product => product.Price);
-    return Results.Ok(sortedProducts);
-});
-app.MapGet("/products/category/{category}/sortBy/ascending", async (string category, ApplicationDbContext db) =>
-{
-    if (category == "all")
-    {
+//         var sortedProductsAll = db.Products.OrderByDescending(product => product.Price);
+//         return Results.Ok(sortedProductsAll);
+//     }
+//     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+//     var sortedProducts = products.OrderByDescending(product => product.Price);
+//     return Results.Ok(sortedProducts);
+// });
+// app.MapGet("/products/category/{category}/sortBy/ascending", async (string category, ApplicationDbContext db) =>
+// {
+//     if (category == "all")
+//     {
 
-        var sortedProductsAll = db.Products.OrderBy(product => product.Price);
-        return Results.Ok(sortedProductsAll);
-    }
-    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
-    var sortedProducts = products.OrderBy(product => product.Price);
-    return Results.Ok(sortedProducts);
-});
-app.MapGet("/products/category/{category}/sortBy/popularity", async (string category, ApplicationDbContext db) =>
-{
-    if (category == "all")
-    {
+//         var sortedProductsAll = db.Products.OrderBy(product => product.Price);
+//         return Results.Ok(sortedProductsAll);
+//     }
+//     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+//     var sortedProducts = products.OrderBy(product => product.Price);
+//     return Results.Ok(sortedProducts);
+// });
+// app.MapGet("/products/category/{category}/sortBy/popularity", async (string category, ApplicationDbContext db) =>
+// {
+//     if (category == "all")
+//     {
 
-        var sortedProductsAll = db.Products.OrderByDescending(product => product.RateCount);
-        return Results.Ok(sortedProductsAll);
-    }
-    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
-    var sortedProducts = products.OrderByDescending(product => product.RateCount);
-    return Results.Ok(sortedProducts);
-});
-app.MapGet("/products/category/{category}/sortBy/rate", async (string category, ApplicationDbContext db) =>
-{
-    if (category == "all")
-    {
+//         var sortedProductsAll = db.Products.OrderByDescending(product => product.RateCount);
+//         return Results.Ok(sortedProductsAll);
+//     }
+//     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+//     var sortedProducts = products.OrderByDescending(product => product.RateCount);
+//     return Results.Ok(sortedProducts);
+// });
+// app.MapGet("/products/category/{category}/sortBy/rate", async (string category, ApplicationDbContext db) =>
+// {
+//     if (category == "all")
+//     {
 
-        var sortedProductsAll = db.Products.OrderByDescending(product => product.Rate);
-        return Results.Ok(sortedProductsAll);
-    }
-    var products = await db.Products.Where(item => item.Category == category).ToListAsync();
-    var sortedProducts = products.OrderByDescending(product => product.Rate);
-    return Results.Ok(sortedProducts);
-});
+//         var sortedProductsAll = db.Products.OrderByDescending(product => product.Rate);
+//         return Results.Ok(sortedProductsAll);
+//     }
+//     var products = await db.Products.Where(item => item.Category == category).ToListAsync();
+//     var sortedProducts = products.OrderByDescending(product => product.Rate);
+//     return Results.Ok(sortedProducts);
+// });
 app.Run();
 
 

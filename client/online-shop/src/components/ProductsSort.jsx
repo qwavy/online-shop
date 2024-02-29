@@ -1,23 +1,27 @@
 
-import {sortByAsscendingPrice, sortByDescendingPrice, sortByPopularity, sortByRating} from '../api/Api'
+import {sortByAsscendingPrice, sortByDescendingPrice, sortByPopularity, sortByRating,sortProducts} from '../api/Api'
 import { useEffect, useState } from "react";
 
 const ProductsSort = ({sortByCategoryButton,setProducts}) => {
-  const [sortValue,setSortValue] = useState("")
+  const [sortValue,setSortValue] = useState("rate")
 
 
     useEffect(() => {
-        if(sortValue == "rate"){
-          sortByRating(sortByCategoryButton,setProducts)
-        }else if(sortValue == "popularity"){
-          sortByPopularity(sortByCategoryButton,setProducts)
-        }
-        else if(sortValue == "asscending"){
-          sortByAsscendingPrice(sortByCategoryButton,setProducts)
-        }else if(sortValue == "descending"){
-          sortByDescendingPrice(sortByCategoryButton,setProducts)
-        }
+        // if(sortValue == "rate"){
+        //     sortProducts("rate",sortByCategoryButton,setProducts)
+        // }else if(sortValue == "popularity"){
+        //   sortByPopularity(sortByCategoryButton,setProducts)
+        // }
+        // else if(sortValue == "asscending"){
+        //   sortByAsscendingPrice(sortByCategoryButton,setProducts)
+        // }else if(sortValue == "descending"){
+        //   sortByDescendingPrice(sortByCategoryButton,setProducts)
+        // }
+        sortProducts(sortValue,sortByCategoryButton,setProducts)
       },[sortValue])
+
+    const test = () => {
+    }
 
 
   return (
@@ -28,6 +32,9 @@ const ProductsSort = ({sortByCategoryButton,setProducts}) => {
           <option value="asscending">asscending</option>
           <option value="descending">descending</option>
         </select>
+        <button onClick={() => test()}>
+            test
+        </button>
     </>
   );
 };

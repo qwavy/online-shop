@@ -176,3 +176,16 @@ export const sortByRating = async (category,setProducts) => {
     throw e
   }
 }
+
+
+export const sortProducts = async (sortMethod , category , setProducts ) => {
+  try{
+    const data = await getData(`${BASE_URL}/products/category/${category}?sortingMethod=${sortMethod}`)
+    setProducts(data)
+    console.log(data)
+  }
+  catch(e){
+    console.error(e)
+    throw e
+  }
+} 
