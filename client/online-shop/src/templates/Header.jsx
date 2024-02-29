@@ -58,7 +58,7 @@ const Header = () => {
                 About
               </a>
             </div>
-
+{/*  */}
             <div className="flex justify-center md:block">
               <Link className="relative text-gray-700 hover:text-gray-600" to="/Cart">
                 <svg
