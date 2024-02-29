@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "../templates/Header";
-import Footer from "../templates/Footer";
+import Header from "../templates/header";
+import Footer from "../templates/footer";
 import {
   StarIcon,
   ArrowLeftIcon,
@@ -15,8 +15,8 @@ import {
   getTopRateProducts,
   getSearchResults,
 } from "../api/Api";
-import ProductItem from "../templates/ProductItem";
-import TopRateProductsSwipper from "../components/TopRateProductsSwiper";
+import ProductItem from "../templates/product-item";
+import TopRateProductsSwipper from "../components/top-rate-products-swiper";
 // import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {

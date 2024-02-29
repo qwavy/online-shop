@@ -5,12 +5,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import MainPage from './pages/MainPage.jsx';
-import Cart from './pages/Cart.jsx';
-import ProductPage from './pages/ProductPage.jsx';
-import Shop from './pages/Shop.jsx';
-import Checkout from './pages/Checkout.jsx';
-import Layout from './templates/Layout.jsx';
+import MainPage from './pages/main-page.jsx';
+import Cart from './pages/cart.jsx';
+import ProductPage from './pages/product-page.jsx';
+import Shop from './pages/shop.jsx';
+import Checkout from './pages/checkout.jsx';
+import Layout from './templates/layout.jsx';
 
 
 const router = createBrowserRouter([

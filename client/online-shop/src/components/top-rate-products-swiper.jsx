@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import { StarIcon,ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { getAllProducts,addToCart } from "../api/Api";
-import ProductItem from "../templates/ProductItem";
+import ProductItem from "../templates/product-item";
 
 const TopRateProductsSwipper = ({ products }) => {
   console.log(products);

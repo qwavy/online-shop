@@ -1,4 +1,4 @@
-import Header from "../templates/Header";
+import Header from "../templates/header";
 
 const Checkout = () => {
   return (

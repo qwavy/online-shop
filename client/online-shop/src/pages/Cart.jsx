@@ -19,7 +19,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
-import Header from "../templates/Header";
+import Header from "../templates/header";
 import { Link } from "react-router-dom";
 import { getCartProducts, getCartTotal } from "../api/Api";
 // import { getCartProducts } from "../api/cart/cartApi";

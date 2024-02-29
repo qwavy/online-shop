@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import Header from "../templates/Header";
+import Header from "../templates/header";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
 import {
@@ -14,8 +14,8 @@ import {
   sortByRating,
 } from "../api/Api";
 import { sortByCategory } from "../api/Api";
-import ProductItem from "../templates/ProductItem";
-import ProductsSort from "../components/ProductsSort";
+import ProductItem from "../templates/product-item";
+import ProductsSort from "../components/products-sort";
 import { useDebounce } from "../hooks/use-debounce";
 import { CategoryButton } from "../components/category-button";
 const Shop = () => {

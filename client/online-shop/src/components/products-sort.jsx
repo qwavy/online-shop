@@ -7,16 +7,7 @@ const ProductsSort = ({sortByCategoryButton,setProducts}) => {
 
 
     useEffect(() => {
-        // if(sortValue == "rate"){
-        //     sortProducts("rate",sortByCategoryButton,setProducts)
-        // }else if(sortValue == "popularity"){
-        //   sortByPopularity(sortByCategoryButton,setProducts)
-        // }
-        // else if(sortValue == "asscending"){
-        //   sortByAsscendingPrice(sortByCategoryButton,setProducts)
-        // }else if(sortValue == "descending"){
-        //   sortByDescendingPrice(sortByCategoryButton,setProducts)
-        // }
+
         sortProducts(sortValue,sortByCategoryButton,setProducts)
       },[sortValue])
 
