@@ -9,7 +9,12 @@ import {
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
-import { getAllProducts, addToCart, getTopRateProducts, getSearchResults } from "../api/Api";
+import {
+  getAllProducts,
+  addToCart,
+  getTopRateProducts,
+  getSearchResults,
+} from "../api/Api";
 import ProductItem from "../templates/ProductItem";
 import TopRateProductsSwipper from "../components/TopRateProductsSwipper";
 // import { addToCart } from "../api/cart/cartApi";
@@ -20,15 +25,13 @@ const MainPage = () => {
 
   useEffect(() => {
     getAllProducts(setProducts);
-    getTopRateProducts( setTopRateProducts);
+    getTopRateProducts(setTopRateProducts);
     console.log(topRateProducts);
   }, []);
-
 
   return (
     <>
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-
         <section className="flex flex-col justify-center lg:flex-row  w-full">
           <div className="w-11/12 lg:w-2/4 m-10  ">
             <Link to="/product/18">
@@ -74,66 +77,42 @@ const MainPage = () => {
             />
           </div>
         </section>
-        <h1 className="font-roboto font-bold text-5xl  mb-10">
-          Shop by Category
-        </h1>
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          <div className="border-cyan-300 border-4 rounded-xl">
-            <Link to="/Shop/phone">
-              <div className="flex justify-center items-center">
-                <span className="font-roboto font-bold items-center text-3xl">
-                  Phones
-                </span>
-              </div>
-              <img
-                src="https://c.dns-shop.kz/thumb/st4/fit/160/160/21372bacc6b20ea18c530849f9177f61/775f3cdb98e5f7e7fecf8920121bdeca55794027a61db74fccde34629a2d4530.jpg"
-                className="mx-auto"
-              />
-            </Link>
-          </div>
-          <div className="border-purple-400 border-4 rounded-xl flex flex-col justify-between">
-            <Link to="/Shop/tablet">
-              <div className="flex justify-center items-center">
-                <span className="font-roboto font-bold items-center text-3xl">
-                  Tablets
-                </span>
-              </div>
-              <img
-                src="https://c.dns-shop.kz/thumb/st4/fit/160/160/4ddaedea27152d83478d75348a8e2e01/8c494b7a8171adb792c2d07e88d6dda54a98d4b9108f8ae47fb86f317ba99d00.jpg"
-                className="mx-auto"
-              />
-            </Link>
-          </div>
-          <div className="border-orange-400 border-4 rounded-xl flex flex-col justify-between">
-            <Link to="/Shop/laptop">
-              <div className="flex justify-center items-center">
-                <span className="font-roboto font-bold items-center text-3xl">
-                  Laptops
-                </span>
-              </div>
-              <img
-                src="https://c.dns-shop.kz/thumb/st1/fit/160/160/6e92389bfc5cc627c0f6895341f42c5d/1b711e14ae41a587c06b56891482e1c232647f6e78539a08389561553f7e2f03.jpg"
-                className="mx-auto"
-              />
-            </Link>
-          </div>
-          <div className="border-green-400 border-4 rounded-xl flex flex-col justify-between">
-            <div className="flex justify-center items-center">
-              <span className="font-roboto font-bold items-center text-3xl">
-                Tv
-              </span>
-            </div>
-            <img
-              src="https://c.dns-shop.kz/thumb/st4/fit/160/160/a36577f845309dfd67da714a2fd6c1ec/5a991b3a647a989aa0186cfab2cd1e938967fbfc690500641084f074131623e5.jpg"
-              className="mx-auto"
-            />
-          </div>
-        </section>
-        <h1 className="font-roboto font-bold text-5xl  mb-10 mt-10">
-          Top Rate Products
+        <h1 className="font-readex font-bold text-5xl  mb-10">
+          Shop by <span className="text-indigo-500">
+          Category
+            </span>
         </h1>
         <section>
-          <TopRateProductsSwipper products={topRateProducts}/>
+          <div className="flex w-full justify-between">
+            <div className="w-4/12 ">
+              
+              <Link to="/shop/laptop" className="shadow-2xl rounded-xl">
+                <img src="https://i.imgur.com/TNkKIv4.png"/>
+                <h1 className="font-readex text-xl flex justify-end p-8">True Laptop Solution</h1>
+              </Link>
+              <Link to="/shop/watch" className="mt-20 shadow-2xl rounded-xl ">
+                <img src="https://i.imgur.com/edPiuwr.png"/>
+                <h1 className="font-readex text-xl p-8 flex justify-end">Not just stylisht</h1>
+
+              </Link>
+            </div>
+            <div className="w-7/12 flex ">
+              <Link to="/shop/phone" className="h-full flex justify-center flex-col shadow-2xl rounded-xl ">
+                <img src="https://i.imgur.com/HoaaxJa.png"/>
+                <h1 className="font-readex text-xl flex justify-center p-8">Your day to day life</h1>
+              </Link>
+              <Link to="/shop/tablet" className="h-full flex justify-center flex-col ml-20 shadow-2xl rounded-xl">
+                <h1 className="font-readex text-xl flex justify-center p-8">Empower your work</h1>
+                <img src="https://i.imgur.com/st9acvJ.png"/>
+              </Link>
+            </div>
+          </div>
+        </section>
+        <h1 className="font-readex font-bold text-5xl  mb-10 mt-10">
+          <span className="text-indigo-500">Top Rate</span> Products
+        </h1>
+        <section>
+          <TopRateProductsSwipper products={topRateProducts} />
         </section>
       </div>
     </>

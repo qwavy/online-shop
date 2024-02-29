@@ -7,7 +7,7 @@ const ProductItem = ({products}) => {
   return (
     <>
       {products.map((product) => (
-        <div className="">
+        <div className="font-roboto">
           <Link
             to={`/product/${product.id}`}
             className="flex flex-col justify-center"

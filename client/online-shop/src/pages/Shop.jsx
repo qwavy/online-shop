@@ -4,34 +4,31 @@ import { useEffect, useState } from "react";
 import Header from "../templates/Header";
 import { Link } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/20/solid";
-import { addToCart, getAllCategories , getSearchResults, sortByAsscendingPrice, sortByDescendingPrice, sortByPopularity, sortByRating } from "../api/Api";
+import {
+  addToCart,
+  getAllCategories,
+  getSearchResults,
+  sortByAsscendingPrice,
+  sortByDescendingPrice,
+  sortByPopularity,
+  sortByRating,
+} from "../api/Api";
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../templates/ProductItem";
+import ProductsSort from "../components/ProductsSort";
 const Shop = () => {
   const { productCategory } = useParams();
-  const [searchValue,setSearchValue] = useState("")
-  const [sortValue,setSortValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [sortByCategoryButton, setSortByCategoryButton] = useState(productCategory);
+  const [sortByCategoryButton, setSortByCategoryButton] =
+    useState(productCategory);
   useEffect(() => {
     getAllCategories(setCategories);
     sortByCategory(productCategory, setProducts);
     console.log(productCategory);
   }, []);
-  useEffect(() => {
-    if(sortValue == "rate"){
-      sortByRating(sortByCategoryButton,setProducts)
-    }else if(sortValue == "popularity"){
-      sortByPopularity(sortByCategoryButton,setProducts)
-    }
-    else if(sortValue == "asscending"){
-      sortByAsscendingPrice(sortByCategoryButton,setProducts)
-    }else if(sortValue == "descending"){
-      sortByDescendingPrice(sortByCategoryButton,setProducts)
-    }
-  },[sortValue])
 
   const sortByCategoryButtonActive = (value) => {
     setSortByCategoryButton(value);
@@ -39,28 +36,24 @@ const Shop = () => {
 
   return (
     <>
-
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="flex justify-between">
           <section>
-            <h1 className="font-roboto font-bold text-5xl  mb-10">Search</h1>
-            <div className="flex justify-center mb-10">
-              <input
-                className="border-2 w-full p-2 border-gray-500 rounded-xl "
-                onChange={(e) => getSearchResults(e.target.value.toLowerCase(),setProducts)}
-                placeholder="Search Bar"
-              />
+            <div>
+              <h1 className="font-roboto font-bold text-5xl  mb-10">Search</h1>
+              <div className="flex justify-center mb-10">
+                <input
+                  className="border-2 w-full p-2 border-gray-500 rounded-xl "
+                  onChange={(e) =>
+                    getSearchResults(e.target.value.toLowerCase(), setProducts)
+                  }
+                  placeholder="Search Bar"
+                />
+              </div>
             </div>
+            <ProductsSort sortByCategoryButton={sortByCategoryButton} setProducts={setProducts}/>
           </section>
-          <section>
-            <select onChange={(e) => setSortValue(e.target.value)}>
-              <option value="rate">rate</option>
-              <option value="popularity">popularity</option>
-              <option value="asscending">asscending</option>
-              <option value="descending">descending</option>
-            </select>
 
-          </section>
           <div>
             <button
               className={

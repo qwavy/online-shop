@@ -7,6 +7,7 @@ export default {
   theme: {
     fontFamily:{
       roboto: ['Roboto', 'sans-serif'],
+      readex: ["Readex Pro"]
     },
     extend: {},
   },
