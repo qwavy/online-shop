@@ -16,19 +16,29 @@ import {
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../templates/ProductItem";
 import ProductsSort from "../components/ProductsSort";
+import { useDebounce } from "../hooks/use-debounce";
+import { CategoryButton } from "../components/category-button";
 const Shop = () => {
   const { productCategory } = useParams();
+
   const [searchValue, setSearchValue] = useState("");
+  const debounceSearchValue = useDebounce(searchValue, 500);
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sortByCategoryButton, setSortByCategoryButton] =
     useState(productCategory);
   useEffect(() => {
-    getAllCategories(setCategories);
+    getAllCategories().then((response) => setCategories(response))
+      
     sortByCategory(productCategory, setProducts);
     console.log(productCategory);
   }, []);
+
+  useEffect(() => {
+    getSearchResults(debounceSearchValue, setProducts);
+    console.log("sfjfskjl");
+  }, [debounceSearchValue]);
 
   const sortByCategoryButtonActive = (value) => {
     setSortByCategoryButton(value);
@@ -44,46 +54,31 @@ const Shop = () => {
               <div className="flex justify-center mb-10">
                 <input
                   className="border-2 w-full p-2 border-gray-500 rounded-xl "
-                  onChange={(e) =>
-                    getSearchResults(e.target.value.toLowerCase(), setProducts)
-                  }
+                  onChange={(e) => {
+                    setSearchValue(e.target.value.toLowerCase(), 500);
+                  }}
                   placeholder="Search Bar"
                 />
               </div>
             </div>
-            <ProductsSort sortByCategoryButton={sortByCategoryButton} setProducts={setProducts}/>
+            <ProductsSort
+              sortByCategoryButton={sortByCategoryButton}
+              setProducts={setProducts}
+            />
           </section>
 
           <div>
-            <button
-              className={
-                sortByCategoryButton === "all"
-                  ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
-                  : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
-              }
-              onClick={() => {
-                sortByCategory("all", setProducts);
-                sortByCategoryButtonActive("all");
-              }}
-            >
-              all
-            </button>
-            {categories.map((category) => (
-              <Link to={`/shop/${category}`} key={category}>
-                <button
-                  className={
-                    sortByCategoryButton === category
-                      ? "bg-indigo-600 font-semibold text-white py-2 px-4 border border-transparent rounded w-48"
-                      : "bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48"
-                  }
-                  onClick={() => {
-                    sortByCategory(category, setProducts);
-                    sortByCategoryButtonActive(category);
-                  }}
-                >
-                  {category}
-                </button>
-              </Link>
+
+            {['all',...categories].map((category) => (
+              <CategoryButton
+                onClick={() => {
+                  sortByCategory(category, setProducts);
+                  sortByCategoryButtonActive(category);
+                }}
+                isActive={sortByCategoryButton === category}
+                category={category}
+                key={category}
+              />
             ))}
           </div>
         </div>

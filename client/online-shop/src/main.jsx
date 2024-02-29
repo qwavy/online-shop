@@ -1,18 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
-  Route
 } from "react-router-dom";
 import MainPage from './pages/MainPage.jsx';
 import Cart from './pages/Cart.jsx';
 import ProductPage from './pages/ProductPage.jsx';
 import Shop from './pages/Shop.jsx';
 import Checkout from './pages/Checkout.jsx';
-import NotFound from './pages/NotFound.jsx';
 import Layout from './templates/Layout.jsx';
 
 

@@ -16,7 +16,7 @@ import {
   getSearchResults,
 } from "../api/Api";
 import ProductItem from "../templates/ProductItem";
-import TopRateProductsSwipper from "../components/TopRateProductsSwipper";
+import TopRateProductsSwipper from "../components/TopRateProductsSwiper";
 // import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {
@@ -99,7 +99,7 @@ const MainPage = () => {
             <div className="w-7/12 flex ">
               <Link to="/shop/phone" className="h-full flex justify-center flex-col shadow-2xl rounded-xl ">
                 <img src="https://i.imgur.com/HoaaxJa.png"/>
-                <h1 className="font-readex text-xl flex justify-center p-8">Your day to day life</h1>
+                <h1 className="font-readex text-xl flex justify-center p-8">Your <span className="text-indigo-500">&nbsp;day&nbsp;</span> to day life</h1>
               </Link>
               <Link to="/shop/tablet" className="h-full flex justify-center flex-col ml-20 shadow-2xl rounded-xl">
                 <h1 className="font-readex text-xl flex justify-center p-8">Empower your work</h1>

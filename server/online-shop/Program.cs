@@ -162,7 +162,7 @@ app.MapGet("/products/category/{category}", async (string category, string? sort
     {
         return Results.Ok(productsByCategory);
     }
-        return Results.Ok(productsByCategory);
+    return Results.Ok(productsByCategory);
 });
 app.MapGet("/products/topRate/", async (ApplicationDbContext db) =>
 {

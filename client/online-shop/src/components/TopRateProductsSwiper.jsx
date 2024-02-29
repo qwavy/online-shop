@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Grid, Pagination } from "swiper/modules";
+import { Grid, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
+import 'swiper/css/navigation';
 import { StarIcon,ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { getAllProducts,addToCart } from "../api/Api";
@@ -18,7 +19,8 @@ const TopRateProductsSwipper = ({ products }) => {
       pagination={{
         clickable: true,
       }}
-      modules={[Grid, Pagination]}
+      modules={[Grid, Pagination,Navigation]}
+      navigation={true}
       className="grid grid-rows-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
       {products.map((product) => (

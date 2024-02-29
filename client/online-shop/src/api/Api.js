@@ -42,12 +42,12 @@ export const getCartProducts = async (setProducts) => {
   }
 };
 
-export const orderTotalCalculate = async (data, setOrderTotal) => {};
 
-export const getAllCategories = async (setCategories) => {
+export const getAllCategories = async () => {
   try {
     const data = await getData(`${BASE_URL}/products/categories`);
-    setCategories(data);
+
+    return data;
   } catch (e) {
     console.log(e);
   }

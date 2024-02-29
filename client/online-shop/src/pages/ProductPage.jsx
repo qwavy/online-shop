@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
-import { getSingleProduct,addToCart } from "../api/Api";
+import { getSingleProduct, addToCart } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
-import Header from "../templates/Header";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -29,7 +28,9 @@ const ProductPage = () => {
           <img src={product[0].image} />
           <div className="flex flex-col p-8">
             <span className="text-3xl font-bold">{product[0].title}</span>
-            <span className="text-3xl text-gray-500">{product[0].category}</span>
+            <span className="text-3xl text-gray-500">
+              {product[0].category}
+            </span>
             <span className="text-3xl font-semibold mt-4">
               {product[0].price}$
             </span>
@@ -59,7 +60,7 @@ const ProductPage = () => {
               {product[0].description}
             </span>
             <button
-              class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48 mt-4"
+              className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48 mt-4"
               onClick={() => addToCart(product)}
             >
               Add to Cart
