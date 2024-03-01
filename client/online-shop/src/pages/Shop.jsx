@@ -1,17 +1,16 @@
 import { useParams } from "react-router-dom";
 
+import { ToastContainer,toast } from "react-toastify";
+import { succesNotify } from "../notify/notify";
+
+
+
+
 import { useEffect, useState } from "react";
-import Header from "../templates/header";
-import { Link } from "react-router-dom";
-import { StarIcon } from "@heroicons/react/20/solid";
 import {
   addToCart,
   getAllCategories,
   getSearchResults,
-  sortByAsscendingPrice,
-  sortByDescendingPrice,
-  sortByPopularity,
-  sortByRating,
 } from "../api/Api";
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../templates/product-item";
@@ -86,6 +85,18 @@ const Shop = () => {
           <ProductItem products={products} />
         </div>
       </div>
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      />
     </>
   );
 };
