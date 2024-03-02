@@ -1,5 +1,5 @@
 
-import {sortByAsscendingPrice, sortByDescendingPrice, sortByPopularity, sortByRating,sortProducts} from '../api/Api'
+import {sortProducts} from '../api/Api'
 import { useEffect, useState } from "react";
 
 const ProductsSort = ({sortByCategoryButton,setProducts}) => {
@@ -10,8 +10,6 @@ const ProductsSort = ({sortByCategoryButton,setProducts}) => {
         sortProducts(sortValue,sortByCategoryButton).then((response) => setProducts(response))
       },[sortValue])
 
-    const test = () => {
-    }
 
 
   return (
@@ -22,9 +20,6 @@ const ProductsSort = ({sortByCategoryButton,setProducts}) => {
           <option value="asscending">asscending</option>
           <option value="descending">descending</option>
         </select>
-        <button onClick={() => test()}>
-            test
-        </button>
     </>
   );
 };

@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { getSingleProduct, addToCart } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
+import { starStyle } from "../cva/cva";
+
+
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -25,19 +28,12 @@ const ProductPage = () => {
             <div className="flex mt-4 content-center items-center">
               {[...Array(5)].map((_, index) => (
                 <div key={index}>
-                  {index < product.rate ? (
                     <StarIcon
                       key={product.rate}
-                      className="text-yellow-400 h-10 w-10 flex-shrink-0"
+                      className={starStyle ({isYellow: index < product.rate})}
                       aria-hidden="true"
                     />
-                  ) : (
-                    <StarIcon
-                      key={product.rate}
-                      className="text-gray-200 h-10 w-10 flex-shrink-0"
-                      aria-hidden="true"
-                    />
-                  )}
+                  
                 </div>
               ))}
               <span className="text-xl text-gray-500 align-center items-center text-center">

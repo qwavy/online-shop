@@ -13,6 +13,11 @@ const getData = async (url, options = {}) => {
   }
 };
 
+const handleError = (e) => {
+  handleError(e)
+  throw(e)
+}
+
 export const getAllProducts = async () => {
   try {
     const data = await getData(`${BASE_URL}/product`);
@@ -20,7 +25,7 @@ export const getAllProducts = async () => {
 
     return data;
   } catch (error) {
-    console.error("Error fetching all products:", error);
+    handleError(error)
   }
 };
 
@@ -29,7 +34,7 @@ export const getSingleProduct = async (id, ) => {
     const data = await getData(`${BASE_URL}/product/${id}`);
     return data;
   } catch (e) {
-    console.log(e);
+    handleError(e);
   }
 };
 
@@ -38,7 +43,7 @@ export const getCartProducts = async () => {
     const data = await getData(`${BASE_URL}/cart`);
     return data;
   } catch (e) {
-    console.log(e);
+    handleError(e);
   }
 };
 
@@ -49,7 +54,7 @@ export const getAllCategories = async () => {
 
     return data;
   } catch (e) {
-    console.log(e);
+    handleError(e);
   }
 };
 
@@ -65,7 +70,7 @@ export const deleteItem = async (item) => {
     });
     console.log(data);
   } catch (error) {
-    console.error("Error deleting item from cart:", error);
+    handleError(error)
   }
 };
 
@@ -79,7 +84,7 @@ export const addToCart = async (item) => {
       body: JSON.stringify(item),
     });
   } catch (e) {
-    console.log(e);
+    handleError(e);
   }
 };
 
@@ -89,7 +94,7 @@ export const getCartTotal = async () => {
     const data = await getData(`${BASE_URL}/cart/total`)
     return data
   }catch(e){
-    console.log(e)
+    handleError(e)
   }
 
 };
@@ -103,7 +108,7 @@ export const sortByCategory = async (value) => {
     const data = await getData(`${BASE_URL}/products/category/${value}`)
     return data
   }catch(e){
-    console.log(e)
+    handleError(e)
   }
 };
 
@@ -112,7 +117,7 @@ export const getTopRateProducts = async () => {
     const data = await getData(`${BASE_URL}/products/topRate/`)
     return data
   }catch(e){
-    console.log(e)
+    handleError(e)
   }
 }
 
@@ -126,7 +131,7 @@ export const getSearchResults = async (value) => {
     return data
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 }
@@ -139,7 +144,7 @@ export const sortByAsscendingPrice = async (category) => {
 
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 }
@@ -150,7 +155,7 @@ export const sortByDescendingPrice = async (category) => {
 
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 }
@@ -161,7 +166,7 @@ export const sortByPopularity = async (category) => {
 
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 }
@@ -172,7 +177,7 @@ export const sortByRating = async (category) => {
 
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 }
@@ -185,7 +190,7 @@ export const sortProducts = async (sortMethod , category ) => {
     
   }
   catch(e){
-    console.error(e)
+    handleError(e)
     throw e
   }
 } 

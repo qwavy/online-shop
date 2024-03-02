@@ -130,7 +130,7 @@ app.MapGet("/products/categories", async (ApplicationDbContext db) =>
     var categories = await db.Products.Select(p => p.Category).Distinct().ToListAsync();
     return Results.Ok(categories);
 });
-app.MapGet("/products/category/{category}", async (string category, string? sortingMethod, ApplicationDbContext db) =>
+app.MapGet("/products/category/{category}", async (string category, string? sortingMethod, string? searchValue, ApplicationDbContext db) =>
 {
     var productsByCategory = await db.Products.Where(item => item.Category == category).ToListAsync();
     if (sortingMethod == "descending")
@@ -162,6 +162,8 @@ app.MapGet("/products/category/{category}", async (string category, string? sort
     {
         return Results.Ok(productsByCategory);
     }
+
+    
     return Results.Ok(productsByCategory);
 });
 app.MapGet("/products/topRate/", async (ApplicationDbContext db) =>

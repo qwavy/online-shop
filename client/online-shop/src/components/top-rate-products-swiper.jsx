@@ -29,7 +29,7 @@ const TopRateProductsSwipper = ({ products }) => {
         className="grid grid-rows-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 "
       >
         {products.map((product) => (
-          <div className="swiper-container">
+          <div className="swiper-container" key={product.id}>
             <SwiperSlide className="swiper-img">
               <Link
                 to={`/product/${product.id}`}
@@ -67,7 +67,7 @@ const TopRateProductsSwipper = ({ products }) => {
                 </div>
               </Link>
               <button
-                class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
+                className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
                 onClick={() => addToCart(product)}
               >
                 <ShoppingCartIcon className="h-6 w-6" />

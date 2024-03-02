@@ -1,16 +1,9 @@
 import { StarIcon, ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { addToCart } from "../api/Api";
-import { cva } from "class-variance-authority";
 import { succesNotify } from "../notify/notify";
-const starStyle = cva("h-5 w-5 flex-shrink-0", {
-  variants: {
-    isYellow: {
-      true: "text-yellow-400",
-      false: "text-gray-200",
-    },
-  },
-});
+import { starStyle } from "../cva/cva";
+
 
 // eslint-disable-next-line react/prop-types
 const ProductItem = ({ products }) => {

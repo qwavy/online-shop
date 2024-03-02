@@ -62,7 +62,7 @@ const Shop = () => {
             {["all", ...categories].map((category) => (
               <CategoryButton
                 onClick={() => {
-                  sortByCategory(category, setProducts);
+                  sortByCategory(category).then((response) => setProducts(response));
                   sortByCategoryButtonActive(category);
                 }}
                 isActive={sortByCategoryButton === category}
