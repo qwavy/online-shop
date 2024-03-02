@@ -3,11 +3,23 @@ import { Link } from "react-router-dom";
 import { addToCart } from "../api/Api";
 import { succesNotify } from "../notify/notify";
 import { starStyle } from "../cva/cva";
+import { Notify } from "../components/notify";
+import { useState } from "react";
 
 
-// eslint-disable-next-line react/prop-types
-const ProductItem = ({ products }) => {
+export const ProductItem = ({ products }) => {
+  const [showNotify, setShowNotify] = useState(false);
 
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setShowNotify(true);
+
+    setTimeout(() => {
+      setShowNotify(false);
+    }, 2000); 
+
+
+  };
 
   return (
     <>
@@ -20,7 +32,7 @@ const ProductItem = ({ products }) => {
           >
             <img
               src={product.image}
-              className=" w-40 h-40 mx-auto group-hover:opacity-75"
+              className=" w-40 h-40 mx-auto group-hover:opacity-75 object-contain"
             />
             <span className="text-center text-lg ">{product.title}</span>
             <span className="mt-1 text-lg font-medium text-gray-900">
@@ -44,16 +56,15 @@ const ProductItem = ({ products }) => {
           <button
             className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
             onClick={() => {
-              addToCart(product)
-              succesNotify()
-            } }
+              handleAddToCart(product);
+            }}
           >
             <ShoppingCartIcon className="h-6 w-6" />
           </button>
         </div>
       ))}
-
+      <Notify showNotifyProps={showNotify} notifyType={"success"} message={"Product Added"}/>
     </>
   );
 };
-export default ProductItem;
+

@@ -13,7 +13,8 @@ const getData = async (url, options = {}) => {
 };
 
 const handleError = (e) => {
-  handleError(e)
+  console.log("error sdflkasdfl;kasjdf;l")
+  console.log(e)
   throw(e)
 }
 
@@ -75,7 +76,7 @@ export const deleteItem = async (item) => {
 
 export const addToCart = async (item) => {
   try {
-    const data = await getData(`${BASE_URL}/cart`, {
+    fetch(`${BASE_URL}/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +89,6 @@ export const addToCart = async (item) => {
 };
 
 export const getCartTotal = async () => {
-
   try{
     const data = await getData(`${BASE_URL}/cart/total`)
     return data
@@ -177,7 +177,6 @@ export const sortByRating = async (category) => {
   }
   catch(e){
     handleError(e)
-     
   }
 }
 

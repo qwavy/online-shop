@@ -3,6 +3,7 @@ import { getSingleProduct, addToCart } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { starStyle } from "../cva/cva";
+import { succesNotify } from "../notify/notify";
 
 
 
@@ -45,7 +46,10 @@ const ProductPage = () => {
             </span>
             <button
               className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48 mt-4"
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                addToCart(product)
+                succesNotify(true)
+              }}
             >
               Add to Cart
             </button>

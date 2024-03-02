@@ -10,7 +10,7 @@ export const starStyle = cva("h-5 w-5 flex-shrink-0", {
   },
 });
 
-export const buttonStyle = cva("rounded w-48 mr-5 py-2 px-4 border", {
+export const buttonStyle = cva("rounded w-48 mr-5 py-2 px-4 border transition-colors duration-200", {
     variants:{
         isActive:{
             true:"bg-indigo-600 font-semibold text-white border-transparent rounded",
@@ -18,3 +18,6 @@ export const buttonStyle = cva("rounded w-48 mr-5 py-2 px-4 border", {
         }
     }
 })
+
+
+

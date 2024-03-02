@@ -1,23 +1,29 @@
-
-import {
-  QuestionMarkCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/20/solid";
+import { QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getCartProducts, getCartTotal,deleteItem } from "../api/Api";
+import { getCartProducts, getCartTotal, deleteItem } from "../api/Api";
 import { errorNotify } from "../notify/notify";
 import { ToastContainer } from "react-toastify";
+import { Notify } from "../components/notify";
 export default function Cart() {
-
   const [products, setProducts] = useState([]);
   const [orderTotal, setOrderTotal] = useState([]);
 
-  useEffect(() => {
-    getCartProducts().then((response) => setProducts(response))
-    getCartTotal().then((response) => setOrderTotal(response))
-  }, [products]);
+  const [showNotify,setShowNotify] = useState(false)
 
+  useEffect(() => {
+    getCartProducts().then((response) => setProducts(response));
+    getCartTotal().then((response) => setOrderTotal(response));
+  }, [products])
+
+  const handleDeleteItem = (product) => {
+    deleteItem(product)
+    setShowNotify(true)
+    setTimeout(() => {
+      setShowNotify(false);
+    }, 2000); 
+
+  }
 
   return (
     <>
@@ -37,59 +43,67 @@ export default function Cart() {
                 className="divide-y divide-gray-200 border-b border-t border-gray-200"
               >
                 {products.map((product) => (
-                  <li key={product.id} className="flex py-6 sm:py-10">
-                    <div className="flex-shrink-0">
-                      <img
-                        src={product.image}
-                        className="h-24 w-48 rounded-md object-cover object-center sm:h-48 sm:w-64 "
-                      />
-                    </div>
+                  <li key={product.id}>
+                    <Link
+                      className="flex py-6 sm:py-10"
+                      to={`/product/${product.id}`}
+                    >
+                      <div className="flex-shrink-0">
+                        <img
+                          src={product.image}
+                          className="h-24 w-48 rounded-md object-contain object-center sm:h-48 sm:w-64 "
+                        />
+                      </div>
 
-                    <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-                      <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-                        <div>
-                          <div className="flex justify-between">
-                            <h3 className="text-sm">
-                              <a
-                                href="#"
-                                className="font-medium text-gray-700 hover:text-gray-800"
+                      <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+                        <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+                          <div>
+                            <div className="flex justify-between">
+                              <h3 className="text-sm">
+                                <a
+                                  href="#"
+                                  className="font-medium text-gray-700 hover:text-gray-800"
+                                >
+                                  {product.title}
+                                </a>
+                              </h3>
+                            </div>
+                            <div className="mt-1 flex text-sm">
+                              <p className="text-gray-500">
+                                {product.category}
+                              </p>
+                            </div>
+                            <p className="mt-1 text-sm font-medium text-gray-900">
+                              {product.price}$
+                            </p>
+                            <p className="mt-1 text-xs font-medium text-gray-800">
+                              {product.description}
+                            </p>
+                          </div>
+
+                          <div className="mt-4 sm:mt-0 sm:pr-9">
+                            <div className="absolute right-0 top-0">
+                              <button
+                                type="button"
+                                className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500 z-2"
                               >
-                                {product.title}
-                              </a>
-                            </h3>
-                          </div>
-                          <div className="mt-1 flex text-sm">
-                            <p className="text-gray-500">{product.category}</p>
-                          </div>
-                          <p className="mt-1 text-sm font-medium text-gray-900">
-                            {product.price}$
-                          </p>
-                          <p className="mt-1 text-xs font-medium text-gray-800">
-                            {product.description}
-                          </p>
-                        </div>
-
-                        <div className="mt-4 sm:mt-0 sm:pr-9">
-
-                          <div className="absolute right-0 top-0">
-                            <button
-                              type="button"
-                              className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500"
-                            >
-                              <span className="sr-only">Remove</span>
-                              <XMarkIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                                onClick={() => {
-                                  deleteItem(product)
-                                  errorNotify()
-                                }}
-                              />
-                            </button>
+                                <span className="sr-only">Remove</span>
+                                <XMarkIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    handleDeleteItem(product)
+                                    // deleteItem(product);
+                                    // errorNotify();
+                                  }}
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -109,7 +123,9 @@ export default function Cart() {
               <dl className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Subtotal</dt>
-                  <dd className="text-sm font-medium text-gray-900">{orderTotal}$</dd>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {orderTotal}$
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex items-center text-sm text-gray-600">
@@ -127,7 +143,7 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">5$</dd>
+                  <dd className="text-sm font-medium text-gray-900">{orderTotal ? "5$" : "0$"}</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="flex text-sm text-gray-600">
@@ -145,14 +161,16 @@ export default function Cart() {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">8.32$</dd>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {orderTotal ? "8.32$" : "0$"}
+                    </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Order total
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    {Math.ceil(orderTotal + 5 + 8.32)}$
+                    {orderTotal ? Math.ceil(orderTotal + 5 + 8.32) : 0}$
                   </dd>
                 </div>
               </dl>
@@ -172,17 +190,18 @@ export default function Cart() {
         </div>
       </div>
       <ToastContainer
-position="top-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="colored"
-/>
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <Notify showNotifyProps={showNotify} notifyType="delete" message="product deleted"/>
     </>
   );
 }

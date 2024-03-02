@@ -12,6 +12,8 @@
   "dependencies": {
     "@headlessui/react": "^0.0.0-insiders.08baf09",
     "@heroicons/react": "^2.1.1",
+    "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/react-select": "^2.0.0",
     "class-variance-authority": "^0.7.0",
     "headlessui": "^0.0.0",
     "react": "^18.2.0",

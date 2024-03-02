@@ -5,10 +5,12 @@ import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { getAllCategories, getSearchResults } from "../api/Api";
 import { sortByCategory } from "../api/Api";
-import ProductItem from "../templates/product-item";
+import { ProductItem } from "../templates/product-item";
 import ProductsSort from "../components/products-sort";
 import { useDebounce } from "../hooks/use-debounce";
 import { CategoryButton } from "../components/category-button";
+import { Notify } from "../components/notify";
+import { BaseSelect } from "../components/select";
 const Shop = () => {
   const { productCategory } = useParams();
 
@@ -35,9 +37,11 @@ const Shop = () => {
     setSortByCategoryButton(value);
   };
 
+  const values = ["rate","popularity","ascending","descending"]
+
   return (
     <>
-      <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8 ">
         <div className="flex justify-between">
           <section>
             <div>
@@ -55,7 +59,9 @@ const Shop = () => {
             <ProductsSort
               sortByCategoryButton={sortByCategoryButton}
               setProducts={setProducts}
+
             />
+            <BaseSelect values={values} sortByCategoryButton={sortByCategoryButton} setProducts={setProducts}/>
           </section>
 
           <div>

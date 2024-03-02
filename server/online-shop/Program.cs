@@ -145,25 +145,40 @@ app.MapGet("/products/category/{category}", async (string category, string? sort
     }
     else if (sortingMethod == "ascending")
     {
+        if (category == "all")
+        {
+            var sortedProductsAllCategory = db.Products.OrderBy(product => product.Price);
+            return Results.Ok(sortedProductsAllCategory);
+        }
         var sortedProducts = productsByCategory.OrderBy(product => product.Price);
         return Results.Ok(sortedProducts);
     }
     else if (sortingMethod == "rate")
-    { 
+    {
+        if (category == "all")
+        {
+            var sortedProductsAllCategory = db.Products.OrderByDescending(product => product.Rate);
+            return Results.Ok(sortedProductsAllCategory);
+        }
         var sortedProducts = productsByCategory.OrderByDescending(product => product.Rate);
         return Results.Ok(sortedProducts);
     }
     else if (sortingMethod == "popularity")
     {
+        if (category == "all")
+        {
+            var sortedProductsAllCategory = db.Products.OrderByDescending(product => product.RateCount);
+            return Results.Ok(sortedProductsAllCategory);
+        }
         var sortedProducts = productsByCategory.OrderByDescending(product => product.RateCount);
         return Results.Ok(sortedProducts);
     }
-    else if (sortingMethod == "")   
+    else if (sortingMethod == "")
     {
         return Results.Ok(productsByCategory);
     }
 
-    
+
     return Results.Ok(productsByCategory);
 });
 app.MapGet("/products/topRate/", async (ApplicationDbContext db) =>
