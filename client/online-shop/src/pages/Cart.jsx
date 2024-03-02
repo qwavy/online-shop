@@ -1,52 +1,23 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+
 import {
-  CheckIcon,
-  ClockIcon,
   QuestionMarkCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
-import Header from "../templates/header";
 import { Link } from "react-router-dom";
-import { getCartProducts, getCartTotal } from "../api/Api";
-// import { getCartProducts } from "../api/cart/cartApi";
-
+import { getCartProducts, getCartTotal,deleteItem } from "../api/Api";
+import { errorNotify } from "../notify/notify";
+import { ToastContainer } from "react-toastify";
 export default function Cart() {
 
   const [products, setProducts] = useState([]);
   const [orderTotal, setOrderTotal] = useState([]);
 
   useEffect(() => {
-    getCartProducts(setProducts)
-    getCartTotal(setOrderTotal)
+    getCartProducts().then((response) => setProducts(response))
+    getCartTotal().then((response) => setOrderTotal(response))
   }, [products]);
 
-
-
-  const deleteItem = (item) => {
-    console.log(item);
-    fetch(`https://localhost:7093/cart/${item.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  };
 
   return (
     <>
@@ -109,7 +80,10 @@ export default function Cart() {
                               <XMarkIcon
                                 className="h-5 w-5"
                                 aria-hidden="true"
-                                onClick={() => deleteItem(product)}
+                                onClick={() => {
+                                  deleteItem(product)
+                                  errorNotify()
+                                }}
                               />
                             </button>
                           </div>
@@ -197,6 +171,18 @@ export default function Cart() {
           </form>
         </div>
       </div>
+      <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
     </>
   );
 }

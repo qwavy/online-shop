@@ -1,4 +1,3 @@
-import Header from "../templates/header";
 
 const NotFound = () => {
   return (

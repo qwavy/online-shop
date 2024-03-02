@@ -1,17 +1,9 @@
 import { useParams } from "react-router-dom";
 
-import { ToastContainer,toast } from "react-toastify";
-import { succesNotify } from "../notify/notify";
-
-
-
+import { ToastContainer } from "react-toastify";
 
 import { useEffect, useState } from "react";
-import {
-  addToCart,
-  getAllCategories,
-  getSearchResults,
-} from "../api/Api";
+import { getAllCategories, getSearchResults } from "../api/Api";
 import { sortByCategory } from "../api/Api";
 import ProductItem from "../templates/product-item";
 import ProductsSort from "../components/products-sort";
@@ -27,16 +19,16 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [sortByCategoryButton, setSortByCategoryButton] =
     useState(productCategory);
+
+  
   useEffect(() => {
-    getAllCategories().then((response) => setCategories(response))
-      
-    sortByCategory(productCategory, setProducts);
+    getAllCategories().then((response) => setCategories(response));
+    sortByCategory(productCategory).then((response) => setProducts(response))
     console.log(productCategory);
   }, []);
 
   useEffect(() => {
-    getSearchResults(debounceSearchValue, setProducts);
-    console.log("sfjfskjl");
+    getSearchResults(debounceSearchValue).then((response) => setProducts(response))
   }, [debounceSearchValue]);
 
   const sortByCategoryButtonActive = (value) => {
@@ -67,8 +59,7 @@ const Shop = () => {
           </section>
 
           <div>
-
-            {['all',...categories].map((category) => (
+            {["all", ...categories].map((category) => (
               <CategoryButton
                 onClick={() => {
                   sortByCategory(category, setProducts);
@@ -86,16 +77,16 @@ const Shop = () => {
         </div>
       </div>
       <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
       />
     </>
   );

@@ -1,32 +1,17 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import Header from "../templates/header";
-import Footer from "../templates/footer";
-import {
-  StarIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-} from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import '../App.css'
 import {
-  getAllProducts,
-  addToCart,
   getTopRateProducts,
-  getSearchResults,
 } from "../api/Api";
-import ProductItem from "../templates/product-item";
 import TopRateProductsSwipper from "../components/top-rate-products-swiper";
-// import { addToCart } from "../api/cart/cartApi";
 
 const MainPage = () => {
-  const [products, setProducts] = useState([]);
   const [topRateProducts, setTopRateProducts] = useState([]);
 
   useEffect(() => {
-    getAllProducts(setProducts);
-    getTopRateProducts(setTopRateProducts);
-    console.log(topRateProducts);
+    getTopRateProducts().then((response) => setTopRateProducts(response));
   }, []);
 
   return (

@@ -1,11 +1,11 @@
 const Footer = () => {
   return (
     <>
-      <nav class="bg-white shadow">
+      <nav className="bg-white shadow">
         <div className="container mx-auto px-6 py-3  sm:flex justify-between items-center">
-          <div class="flex justify-between items-center mb-20 sm:mb-0">
+          <div className="flex justify-between items-center mb-20 sm:mb-0">
             <a
-              class="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700"
+              className="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700"
               href="#"
             >
               Brand

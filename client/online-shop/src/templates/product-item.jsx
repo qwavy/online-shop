@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { addToCart } from "../api/Api";
 import { cva } from "class-variance-authority";
 import { succesNotify } from "../notify/notify";
-import { toast } from "react-toastify";
 const starStyle = cva("h-5 w-5 flex-shrink-0", {
   variants: {
     isYellow: {
@@ -13,25 +12,14 @@ const starStyle = cva("h-5 w-5 flex-shrink-0", {
   },
 });
 
+// eslint-disable-next-line react/prop-types
 const ProductItem = ({ products }) => {
-  const succesNotify = () => {
-    toast.success("🦄 Wow so easy!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-    
-  };
+
 
   return (
     <>
       {products.map((product) => (
-        <div className="font-roboto">
+        <div className="font-roboto" key={product.id}>
           <Link
             to={`/product/${product.id}`}
             className="flex flex-col justify-center"
@@ -61,7 +49,7 @@ const ProductItem = ({ products }) => {
             </div>
           </Link>
           <button
-            class="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
+            className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
             onClick={() => {
               addToCart(product)
               succesNotify()

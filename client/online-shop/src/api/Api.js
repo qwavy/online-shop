@@ -13,30 +13,30 @@ const getData = async (url, options = {}) => {
   }
 };
 
-export const getAllProducts = async (setProducts) => {
+export const getAllProducts = async () => {
   try {
     const data = await getData(`${BASE_URL}/product`);
     // const data = await getData(`https://30fa5ea7fed7cf6b.mokky.dev/products`);
 
-    setProducts(data);
+    return data;
   } catch (error) {
     console.error("Error fetching all products:", error);
   }
 };
 
-export const getSingleProduct = async (id, setProduct) => {
+export const getSingleProduct = async (id, ) => {
   try {
     const data = await getData(`${BASE_URL}/product/${id}`);
-    setProduct([data]);
+    return data;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getCartProducts = async (setProducts) => {
+export const getCartProducts = async () => {
   try {
     const data = await getData(`${BASE_URL}/cart`);
-    setProducts(data);
+    return data;
   } catch (e) {
     console.log(e);
   }
@@ -57,7 +57,7 @@ export const getAllCategories = async () => {
 
 export const deleteItem = async (item) => {
   try {
-    const data = await fetchData(`${BASE_URL}/cart/${item.id}`, {
+    const data = await getData(`${BASE_URL}/cart/${item.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -83,47 +83,47 @@ export const addToCart = async (item) => {
   }
 };
 
-export const getCartTotal = async (setOrderTotal) => {
+export const getCartTotal = async () => {
 
   try{
     const data = await getData(`${BASE_URL}/cart/total`)
-    setOrderTotal(data)
+    return data
   }catch(e){
     console.log(e)
   }
 
 };
 
-export const sortByCategory = async (value, setProducts) => {
+export const sortByCategory = async (value) => {
   try{
     if (value == "all") {
        const data = await getData(`${BASE_URL}/product`)
-       return setProducts(data)
+       return data
     }
     const data = await getData(`${BASE_URL}/products/category/${value}`)
-    setProducts(data)
+    return data
   }catch(e){
     console.log(e)
   }
 };
 
-export const getTopRateProducts = async (setTopRateProducts) => {
+export const getTopRateProducts = async () => {
   try{
     const data = await getData(`${BASE_URL}/products/topRate/`)
-    setTopRateProducts(data)
+    return data
   }catch(e){
     console.log(e)
   }
 }
 
-export const getSearchResults = async (value,setProducts) => {
+export const getSearchResults = async (value) => {
   try{
     if(value == ""){
       const data = await getData(`${BASE_URL}/product`)
-      setProducts(data)
+      return data
     }
     const data = await getData(`${BASE_URL}/products/searchResults/${value}`)
-    setProducts(data)
+    return data
   }
   catch(e){
     console.error(e)
@@ -132,10 +132,10 @@ export const getSearchResults = async (value,setProducts) => {
 }
 
 
-export const sortByAsscendingPrice = async (category,setProducts) => {
+export const sortByAsscendingPrice = async (category) => {
   try{
     const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/ascending`)
-    setProducts(data)
+    return data
 
   }
   catch(e){
@@ -143,10 +143,10 @@ export const sortByAsscendingPrice = async (category,setProducts) => {
     throw e
   }
 }
-export const sortByDescendingPrice = async (category,setProducts) => {
+export const sortByDescendingPrice = async (category) => {
   try{
     const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/descending`)
-    setProducts(data)
+    return data
 
   }
   catch(e){
@@ -154,10 +154,10 @@ export const sortByDescendingPrice = async (category,setProducts) => {
     throw e
   }
 }
-export const sortByPopularity = async (category,setProducts) => {
+export const sortByPopularity = async (category) => {
   try{
     const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/popularity`)
-    setProducts(data)
+    return data
 
   }
   catch(e){
@@ -165,10 +165,10 @@ export const sortByPopularity = async (category,setProducts) => {
     throw e
   }
 }
-export const sortByRating = async (category,setProducts) => {
+export const sortByRating = async (category) => {
   try{
     const data = await getData(`${BASE_URL}/products/category/${category}/sortBy/rate`)
-    setProducts(data)
+    return data
 
   }
   catch(e){
@@ -178,11 +178,11 @@ export const sortByRating = async (category,setProducts) => {
 }
 
 
-export const sortProducts = async (sortMethod , category , setProducts ) => {
+export const sortProducts = async (sortMethod , category ) => {
   try{
     const data = await getData(`${BASE_URL}/products/category/${category}?sortingMethod=${sortMethod}`)
-    setProducts(data)
-    console.log(data)
+    return data
+    
   }
   catch(e){
     console.error(e)

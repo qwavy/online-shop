@@ -7,8 +7,7 @@ const ProductsSort = ({sortByCategoryButton,setProducts}) => {
 
 
     useEffect(() => {
-
-        sortProducts(sortValue,sortByCategoryButton,setProducts)
+        sortProducts(sortValue,sortByCategoryButton).then((response) => setProducts(response))
       },[sortValue])
 
     const test = () => {

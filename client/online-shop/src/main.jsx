@@ -11,33 +11,9 @@ import ProductPage from './pages/product-page.jsx';
 import Shop from './pages/shop.jsx';
 import Checkout from './pages/checkout.jsx';
 import Layout from './templates/layout.jsx';
-
+import 'react-toastify/dist/ReactToastify.css'
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/Home",
-  //   element: <MainPage/>,
-  // },
-  // {
-  //   path:"/cart",
-  //   element:<Cart/>
-  // },
-  // {
-  //   path:"/product/:productId",
-  //   element:<ProductPage/>
-  // },
-  // {
-  //   path:"/shop/:productCategory",
-  //   element:<Shop/>
-  // },
-  // {
-  //   path:"/checkout",
-  //   element:<Checkout/>
-  // },
-  // {
-  //   path:"/adminPanel",
-  //   element:<NotFound/>
-  // }
   {
     path:'/',
     element:<Layout/>,

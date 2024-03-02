@@ -1,4 +1,4 @@
-import { getSearchResults } from "../api/Api";
+
 import { useState,useEffect } from "react";
 export function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
