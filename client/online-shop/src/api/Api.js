@@ -9,7 +9,6 @@ const getData = async (url, options = {}) => {
     return response.json();
   } catch (error) {
     console.error("Error:", error.message);
-    throw error;
   }
 };
 
@@ -132,7 +131,7 @@ export const getSearchResults = async (value) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 }
 
@@ -145,7 +144,7 @@ export const sortByAsscendingPrice = async (category) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 }
 export const sortByDescendingPrice = async (category) => {
@@ -156,7 +155,7 @@ export const sortByDescendingPrice = async (category) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 }
 export const sortByPopularity = async (category) => {
@@ -167,7 +166,7 @@ export const sortByPopularity = async (category) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 }
 export const sortByRating = async (category) => {
@@ -178,7 +177,7 @@ export const sortByRating = async (category) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 }
 
@@ -191,6 +190,6 @@ export const sortProducts = async (sortMethod , category ) => {
   }
   catch(e){
     handleError(e)
-    throw e
+     
   }
 } 
