@@ -17,7 +17,7 @@ const MainPage = () => {
   return (
     <>
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
-        <section className="flex flex-col justify-center lg:flex-row  w-full">
+        {/* <section className="flex flex-col justify-center lg:flex-row  w-full">
           <div className="w-11/12 lg:w-2/4 m-10  ">
             <Link to="/product/18">
               <div className="bg-cyan-300 h-44 mb-10 flex justify-around rounded-xl">
@@ -61,7 +61,7 @@ const MainPage = () => {
               className="h-4/6 w-4/5 mx-auto"
             />
           </div>
-        </section>
+        </section> */}
         <h1 className="font-readex font-bold text-5xl  mb-10">
           Shop by <span className="text-indigo-500">
           Category

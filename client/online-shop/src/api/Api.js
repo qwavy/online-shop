@@ -29,7 +29,7 @@ export const getAllProducts = async () => {
   }
 };
 
-export const getSingleProduct = async (id, ) => {
+export const getSingleProduct = async (id ) => {
   try {
     const data = await getData(`${BASE_URL}/product/${id}`);
     return data;

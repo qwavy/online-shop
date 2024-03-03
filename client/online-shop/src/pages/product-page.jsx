@@ -1,18 +1,25 @@
 import { useParams } from "react-router-dom";
-import { getSingleProduct, addToCart } from "../api/Api";
+import { getSingleProduct, addToCart, sortByCategory } from "../api/Api";
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { starStyle } from "../cva/cva";
 import { succesNotify } from "../notify/notify";
+import TopRateProductsSwipper from "../components/top-rate-products-swiper";
 
 
 
 const ProductPage = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
+  const [products,setProducts] = useState([])
+  
   useEffect(() => {
     getSingleProduct(productId).then((response) => setProduct(response))
   }, []);
+  useEffect(() => {
+    sortByCategory(product.category).then((response) => setProducts(response))
+    console.log(product.category)
+  },[product])
   return (
     <>
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -55,6 +62,11 @@ const ProductPage = () => {
             </button>
           </div>
         </div>
+        <section className="mt-20">
+          <h1 className="text-5xl font-readex font-bold"> More Interesting Products</h1>
+          <TopRateProductsSwipper products={products}/>
+          
+        </section>
       </div>
     </>
   );

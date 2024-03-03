@@ -5,6 +5,7 @@ import { getCartProducts, getCartTotal, deleteItem } from "../api/Api";
 import { errorNotify } from "../notify/notify";
 import { ToastContainer } from "react-toastify";
 import { Notify } from "../components/notify";
+import { EmptyCart } from "../components/empty-cart";
 export default function Cart() {
   const [products, setProducts] = useState([]);
   const [orderTotal, setOrderTotal] = useState([]);
@@ -42,7 +43,7 @@ export default function Cart() {
                 role="list"
                 className="divide-y divide-gray-200 border-b border-t border-gray-200"
               >
-                {products.map((product) => (
+                {products.length ?  products.map((product) => (
                   <li key={product.id}>
                     <Link
                       className="flex py-6 sm:py-10"
@@ -105,7 +106,8 @@ export default function Cart() {
                       </div>
                     </Link>
                   </li>
-                ))}
+                )) : <EmptyCart/>}
+                
               </ul>
             </section>
 
