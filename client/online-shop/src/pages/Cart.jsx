@@ -2,15 +2,17 @@ import { QuestionMarkCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCartProducts, getCartTotal, deleteItem } from "../api/Api";
-import { errorNotify } from "../notify/notify";
 import { ToastContainer } from "react-toastify";
-import { Notify } from "../components/notify";
 import { EmptyCart } from "../components/empty-cart";
+import { errorNotify } from "../notify/notify";
 export default function Cart() {
   const [products, setProducts] = useState([]);
   const [orderTotal, setOrderTotal] = useState([]);
 
-  const [showNotify,setShowNotify] = useState(false)
+
+
+
+
 
   useEffect(() => {
     getCartProducts().then((response) => setProducts(response));
@@ -19,11 +21,7 @@ export default function Cart() {
 
   const handleDeleteItem = (product) => {
     deleteItem(product)
-    setShowNotify(true)
-    setTimeout(() => {
-      setShowNotify(false);
-    }, 2000); 
-
+  errorNotify()
   }
 
   return (
@@ -203,7 +201,6 @@ export default function Cart() {
         pauseOnHover
         theme="colored"
       />
-      <Notify showNotifyProps={showNotify} notifyType="delete" message="product deleted"/>
     </>
   );
 }

@@ -3,36 +3,20 @@ import { Link } from "react-router-dom";
 import { addToCart, getCartProducts } from "../api/Api";
 import { succesNotify } from "../notify/notify";
 import { starStyle } from "../cva/cva";
-import { Notify } from "../components/notify";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 export const ProductItem = ({ products }) => {
-  const [showNotify, setShowNotify] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
-
-  const [notifyType,setNotifyType] = useState("success")
-  const [message,setMessage] = useState("Product Added")
   const handleAddToCart = (product) => {
+    succesNotify();
     addToCart(product);
-    setShowNotify(true);
 
-    getCartProducts().then((response) => setCartProducts(response));
-    for (let i = 0; i < cartProducts.length; i++) {
-      if (product.id == cartProducts[i].id) {
-        return setNotifyType("error") & setMessage("error")
-
-      }else{
-        setNotifyType("success")
-        setMessage("Product Added change")
-        console.log(product.id)
-        console.log(cartProducts[i].id)
-      }
-    }
-
-    setTimeout(() => {
-      setShowNotify(false);
-    }, 2000);
+    console.log(cartProducts);
   };
+
+  useEffect(() => {
+    getCartProducts().then((response) => setCartProducts(response));
+  }, []);
 
   return (
     <>
@@ -76,10 +60,18 @@ export const ProductItem = ({ products }) => {
           </button>
         </div>
       ))}
-      <Notify
-        showNotifyProps={showNotify}
-        notifyType={notifyType}
-        message={message}
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
       />
     </>
   );

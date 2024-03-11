@@ -9,7 +9,6 @@ import { ProductItem } from "../templates/product-item";
 import ProductsSort from "../components/products-sort";
 import { useDebounce } from "../hooks/use-debounce";
 import { CategoryButton } from "../components/category-button";
-import { Notify } from "../components/notify";
 import { BaseSelect } from "../components/select";
 const Shop = () => {
   const { productCategory } = useParams();

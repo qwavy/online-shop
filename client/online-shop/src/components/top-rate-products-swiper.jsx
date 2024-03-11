@@ -5,7 +5,8 @@ import "swiper/css/navigation";
 import { StarIcon, ShoppingCartIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { addToCart } from "../api/Api";
-
+import { succesNotify } from "../notify/notify";
+import { ToastContainer } from "react-toastify";
 import "../App.css";
 
 const TopRateProductsSwipper = ({ products }) => {
@@ -68,7 +69,9 @@ const TopRateProductsSwipper = ({ products }) => {
               </Link>
               <button
                 className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-18"
-                onClick={() => addToCart(product)}
+                onClick={() => {
+                  addToCart(product)
+                  succesNotify()} }
               >
                 <ShoppingCartIcon className="h-6 w-6" />
               </button>
@@ -82,7 +85,20 @@ const TopRateProductsSwipper = ({ products }) => {
       <div className="swiper-button-prev">
 
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
+    
   );
 };
 export default TopRateProductsSwipper;

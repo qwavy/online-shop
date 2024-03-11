@@ -5,6 +5,7 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { starStyle } from "../cva/cva";
 import { succesNotify } from "../notify/notify";
 import TopRateProductsSwipper from "../components/top-rate-products-swiper";
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -55,7 +56,7 @@ const ProductPage = () => {
               className="bg-transparent hover:bg-indigo-600 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded w-48 mt-4"
               onClick={() => {
                 addToCart(product)
-                succesNotify(true)
+                succesNotify()
               }}
             >
               Add to Cart
@@ -68,6 +69,18 @@ const ProductPage = () => {
           
         </section>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 };
